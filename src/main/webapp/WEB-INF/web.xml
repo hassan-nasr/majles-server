@@ -10,18 +10,18 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:/applicationContext-makhsan-resource.xml
-            classpath:/applicationContext-makhsan-persistence.xml
-            classpath:/applicationContext-makhsan-security.xml
-            classpath:/applicationContext-makhsan-service.xml
-            classpath:/applicationContext-makhsan.xml
+            classpath:/applicationContext-majles-resource.xml
+            classpath:/applicationContext-majles-persistence.xml
+            classpath:/applicationContext-majles-security.xml
+            classpath:/applicationContext-majles-service.xml
+            classpath:/applicationContext-majles.xml
         </param-value>
     </context-param>
 
     <servlet>
         <display-name>HelloWorldServlet</display-name>
         <servlet-name>HelloWorldServlet</servlet-name>
-        <servlet-class>com.idehgostar.makhsan.HelloWorldServlet</servlet-class>
+        <servlet-class>ir.hassannasr.majles.HelloWorldServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

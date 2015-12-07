@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <!-- Activates scanning of @Service -->
+    <context:component-scan base-package="ir.hassannasr.majles"/>
+
+    <!-- Enable @Transactional support -->
+    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <aop:config>
+        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* core.service.GenericManager+.*(..))" order="1"/>
+        <aop:advisor id="serviceTx" advice-ref="txAdvice"
+                     pointcut="execution(* ir.hassannasr.majles.services.BaseWS+.*(..)) &amp;&amp; !execution(* ir.hassannasr.majles.services.BaseWS+.get*(..))"
+                     order="2"/>
+    </aop:config>
+
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED"/>
+            <!--<tx:method name="get*" read-only="true"/>-->
+            <!--<tx:method name="save*" rollback-for="UserExistsException"/>-->
+        </tx:attributes>
+    </tx:advice>
+    <bean id="candidManager" class="ir.hassannasr.majles.domain.candid.CandidManagerImpl">
+        <constructor-arg ref="candidDao"/>
+    </bean>
+
+
+    <bean id="applicationServiceManager" class="com.idehgostar.makhsan.core.services.ApplicationServiceManagerImpl">
+        <constructor-arg ref="applicationServiceDao"/>
+    </bean>
+
+
+    <bean id="cipherUtils" class="com.idehgostar.makhsan.core.encryption.CipherUtils"/>
+
+
+    <!--<bean id="querySourcesUtil" class="core.base.QuerySourcesUtil">-->
+    <!--</bean>-->
+
+    <!-- =================================================================== -->
+    <!-- Managers: For accessing DAOs                                        -->
+    <!-- =================================================================== -->
+
+    <!--<bean id="actionLogManager" class="core.service.GenericManagerImpl">-->
+        <!--<constructor-arg ref="actionLogDao"/>-->
+    <!--</bean>-->
+
+
+</beans>

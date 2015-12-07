@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "firstName": "علی",
+    "lastName": "نصر",
+    "age": 43,
+    "nid": 234234324,
+    "hozeh": "اصفهان",
+    "bornLocation": "اصفهان",
+    "degree": "Arshad",
+    "studyFiled": "سیاست",
+    "gerayesh": "اصلاح طلب",
+    "dorehInMajles": 2
+  },
+  {
+    "id": 2,
+    "firstName": "مراد",
+    "lastName": "مردانی",
+    "age": 50,
+    "nid": 23423423,
+    "hozeh": "اصفهان",
+    "bornLocation": "اصفهان",
+    "degree": "Doctor",
+    "studyFiled": "قتصاد",
+    "gerayesh": "اصول گرا",
+    "dorehInMajles": 1
+  }
+]

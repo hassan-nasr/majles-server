@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
-    <file url="file://$PROJECT_DIR$/src/main/java/com/idehgostar/makhsan/domain/init/BaseDataFiller.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/idehgostar/makhsan/domain/init/FillerVersion.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/idehgostar/makhsan/domain/init/MakhsanDataFillerHelper.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/idehgostar/makhsan/domain/init/MakhsanInitDataFiller.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/idehgostar/makhsan/domain/singleaccesstoken/SingleAccessToken.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/idehgostar/makhsan/domain/singleaccesstoken/SingleAccessTokenManagerImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ir/hassannasr/majles/domain/init/BaseDataFiller.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ir/hassannasr/majles/domain/init/FillerVersion.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ir/hassannasr/majles/domain/init/MajlesDataFillerHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/ir/hassannasr/majles/domain/init/MajlesInitDataFiller.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/test/java/JerseyTest/AbstractSpringAwareJerseyTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/test/java/JerseyTest/SpringAwareGrizzlyTestContainerFactory.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/test/java/com/idehgostar/makhsan/test/User/RegisterUserTest.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/test/java/dbfill/MakhsanTestDataFiller.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/applicationContext-makhsan-resource-test.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/dbfill/MajlesTestDataFiller.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/java/ir/hassannasr/majles/test/User/RegisterUserTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/applicationContext-majles-resource-test.xml" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -6,11 +6,9 @@
         <!--The exclude-unlisted-classes element is not intended for use in Java SE environments-->
         <!--<exclude-unlisted-classes>false</exclude-unlisted-classes>-->
 
-        <class>com.idehgostar.makhsan.domain.user.User</class>
-        <class>com.idehgostar.makhsan.domain.role.Role</class>
-        <class>com.idehgostar.makhsan.domain.permission.Permission</class>
-        <class>com.idehgostar.makhsan.domain.singleaccesstoken.SingleAccessToken</class>
-        <class>com.idehgostar.makhsan.domain.init.FillerVersion</class>
+
+        <class>ir.hassannasr.majles.domain.init.FillerVersion</class>
+        <class>ir.hassannasr.majles.domain.candid.Candid</class>
         <class>com.idehgostar.makhsan.core.services.ApplicationService</class>
 
 

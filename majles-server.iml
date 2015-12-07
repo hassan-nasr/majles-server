@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module external.linked.project.id="majles-server" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$" external.system.id="GRADLE" external.system.module.group="ir.hassannasr" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset3" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext-makhsan-persistence.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext-makhsan-resource.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext-makhsan-security.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext-makhsan-service.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext-makhsan-solr.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/applicationContext-makhsan.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
     <facet type="web" name="Web Gradle : majles-server-1.0-SNAPSHOT.war">
       <configuration>
         <descriptors>
@@ -9,7 +21,10 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src/main/webapp" relative="/" />
         </webroots>
-        <sourceRoots />
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+        </sourceRoots>
       </configuration>
     </facet>
   </component>
@@ -27,15 +42,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library name="Gradle: com.idehgostar:makhsan-auth:1.1-SNAPSHOT">
-        <CLASSES>
-          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.1-SNAPSHOT/ab1199dce291b21a377e1565792fefbf3207c26a/makhsan-auth-1.1-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" exported="" name="Gradle: com.h2database:h2:1.4.190" level="project" />
     <orderEntry type="library" exported="" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: net.javacrumbs.json-unit:json-unit:1.6.1" level="project" />
@@ -275,5 +281,14 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.sun.grizzly:grizzly-framework:1.9.64" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.sun.grizzly:grizzly-rcm:1.9.64" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.sun.grizzly:grizzly-portunif:1.9.64" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library name="Gradle: com.idehgostar:makhsan-auth:1.1-SNAPSHOT">
+        <CLASSES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.1-SNAPSHOT/ab1199dce291b21a377e1565792fefbf3207c26a/makhsan-auth-1.1-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
