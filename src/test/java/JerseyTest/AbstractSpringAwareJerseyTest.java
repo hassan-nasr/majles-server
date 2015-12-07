@@ -105,6 +105,7 @@ public abstract class AbstractSpringAwareJerseyTest extends JerseyTest {
 								"classpath:applicationContext-majles-persistence.xml " +
 								"classpath:applicationContext-majles-security.xml " +
 								"classpath:applicationContext-majles-service.xml " +
+								"classpath:applicationContext-majles-solr.xml " +
 								"classpath:applicationContext-majles.xml "
 
 				)

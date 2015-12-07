@@ -8,7 +8,7 @@ package ir.hassannasr.majles.core.solr;
  * To change this template use File | Settings | File Templates.
  */
 public class QueryElement {
-    private String tag,text;
+    protected String tag, text;
 
     public QueryElement(String tag, String text) {
         this.tag = tag;

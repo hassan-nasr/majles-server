@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
-        <constructor-arg value="http://192.168.0.5:8983/solr/hadith"/>
+        <constructor-arg value="http://localhost:8983/solr/candids"/>
         <!--<constructor-arg value="${${SolrCollectionKey}}"/>-->
     </bean>
 

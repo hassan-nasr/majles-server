@@ -8,9 +8,10 @@
     "hozeh": "اصفهان",
     "bornLocation": "اصفهان",
     "degree": "Arshad",
-    "studyFiled": "سیاست",
+    "studyField": "سیاست",
     "gerayesh": "اصلاح طلب",
-    "dorehInMajles": 2
+    "dorehInMajles": 2,
+    "imageId": "qwe"
   },
   {
     "id": 2,
@@ -21,8 +22,9 @@
     "hozeh": "اصفهان",
     "bornLocation": "اصفهان",
     "degree": "Doctor",
-    "studyFiled": "قتصاد",
+    "studyField": "قتصاد",
     "gerayesh": "اصول گرا",
-    "dorehInMajles": 1
+    "dorehInMajles": 1,
+    "imageId": "asd"
   }
 ]

@@ -17,9 +17,10 @@ public class Candid extends BaseObject {
     String hozeh;
     String bornLocation;
     Degree degree;
-    String studyFiled;
+    String studyField;
     String gerayesh;
     Integer dorehInMajles;
+    String imageId;
 
     @Override
     public boolean equals(Object o) {
@@ -116,12 +117,12 @@ public class Candid extends BaseObject {
         this.degree = degree;
     }
 
-    public String getStudyFiled() {
-        return studyFiled;
+    public String getStudyField() {
+        return studyField;
     }
 
-    public void setStudyFiled(String studyFiled) {
-        this.studyFiled = studyFiled;
+    public void setStudyField(String studyField) {
+        this.studyField = studyField;
     }
 
     public String getGerayesh() {
@@ -138,5 +139,13 @@ public class Candid extends BaseObject {
 
     public void setDorehInMajles(Integer dorehInMajles) {
         this.dorehInMajles = dorehInMajles;
+    }
+
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageID) {
+        this.imageId = imageID;
     }
 }
