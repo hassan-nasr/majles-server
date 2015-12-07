@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.myfaces.tomahawk:tomahawk20:1.1.13">
+    <CLASSES>
+      <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.apache.myfaces.tomahawk/tomahawk20/1.1.13/1e6a5e714dbc58e41826245ba6880b1606edbb48/tomahawk20-1.1.13.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.apache.myfaces.tomahawk/tomahawk20/1.1.13/974b308c185dc030057a8aa480f13232c62d3d69/tomahawk20-1.1.13-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

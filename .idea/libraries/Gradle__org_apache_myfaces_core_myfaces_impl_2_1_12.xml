@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.myfaces.core:myfaces-impl:2.1.12">
+    <CLASSES>
+      <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.apache.myfaces.core/myfaces-impl/2.1.12/539eef27fed00812b6f05e05535c131b328428df/myfaces-impl-2.1.12.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.apache.myfaces.core/myfaces-impl/2.1.12/a74826f213cf6df9542bbeb471eee522432ca318/myfaces-impl-2.1.12-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

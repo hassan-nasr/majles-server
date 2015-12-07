@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sun.grizzly:grizzly-servlet-webserver:1.9.45">
+    <CLASSES>
+      <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.sun.grizzly/grizzly-servlet-webserver/1.9.45/984f77f2dea3d0e31845c4129d95e5901416d343/grizzly-servlet-webserver-1.9.45.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.sun.grizzly/grizzly-servlet-webserver/1.9.45/6fd90eebd43731c8e34a295ccd37e509926b89d7/grizzly-servlet-webserver-1.9.45-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

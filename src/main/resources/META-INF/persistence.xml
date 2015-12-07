@@ -1,0 +1,19 @@
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://java.sun.com/xml/ns/persistence"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="jpaSettings" transaction-type="RESOURCE_LOCAL">
+        <!--The exclude-unlisted-classes element is not intended for use in Java SE environments-->
+        <!--<exclude-unlisted-classes>false</exclude-unlisted-classes>-->
+
+        <class>com.idehgostar.makhsan.domain.user.User</class>
+        <class>com.idehgostar.makhsan.domain.role.Role</class>
+        <class>com.idehgostar.makhsan.domain.permission.Permission</class>
+        <class>com.idehgostar.makhsan.domain.singleaccesstoken.SingleAccessToken</class>
+        <class>com.idehgostar.makhsan.domain.init.FillerVersion</class>
+        <class>com.idehgostar.makhsan.core.services.ApplicationService</class>
+
+
+
+    </persistence-unit>
+</persistence>

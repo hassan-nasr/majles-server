@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sun.jersey.contribs:jersey-spring:1.19">
+    <CLASSES>
+      <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.sun.jersey.contribs/jersey-spring/1.19/ae4147c453f6d52ea6affeaf01f1eeb9d3c55351/jersey-spring-1.19.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.sun.jersey.contribs/jersey-spring/1.19/89b423e33c0cf5a78cec2ed001ebff26e07c5d43/jersey-spring-1.19-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

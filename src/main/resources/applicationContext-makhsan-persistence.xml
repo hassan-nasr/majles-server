@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+
+    <bean id="querySourcesUtil" class="core.base.QuerySourcesUtil">
+
+    </bean>
+
+    <bean id="genericDaoImpl" class="core.dao.GenericDaoImpl" abstract="true">
+        <!--<property name="entityManagerFactory" ref="entityManagerFactory"/>-->
+    </bean>
+
+    <bean id="roleDao" class="com.idehgostar.makhsan.domain.role.RoleDaoImpl"/>
+    <bean id="userDao" class="com.idehgostar.makhsan.domain.user.UserDaoImpl"/>
+    <bean id="permissionDao" class="com.idehgostar.makhsan.domain.permission.PermissionDaoImpl"/>
+    <bean id="singleAccessTokenDao" class="com.idehgostar.makhsan.domain.singleaccesstoken.SingleAccessTokenDaoImpl"/>
+    <bean id="applicationServiceDao" class="com.idehgostar.makhsan.core.services.ApplicationServiceDaoImpl"/>
+
+
+    <!--<bean id="genericDaoImpl" class="core.dao.GenericDaoImpl" abstract="true">-->
+    <!--</bean>-->
+
+    <!--<bean id="enumsDao" class="core.dao.GenericDaoImpl" parent="genericDaoImpl">-->
+    <!--<constructor-arg value="core.model.enums.Enums"/>-->
+    <!--</bean>-->
+
+</beans>

@@ -1,0 +1,38 @@
+<w:rFonts w:hint="cs">
+    <xsl:attribute name="w:cs">
+        <xsl:value-of select="$[[STYLENAME]]Fontname"/>
+    </xsl:attribute>
+</w:rFonts>
+<w:sz>
+<xsl:attribute name="w:val">
+    <xsl:value-of select="$[[STYLENAME]]Fontsize"/>
+</xsl:attribute>
+</w:sz>
+<w:szCs>
+<xsl:attribute name="w:val">
+    <xsl:value-of select="$[[STYLENAME]]Fontsize"/>
+</xsl:attribute>
+</w:szCs>
+<xsl:if test="$[[STYLENAME]]Bold">
+<w:b/>
+<w:bCs/>
+</xsl:if>
+<xsl:if test="$[[STYLENAME]]Italic">
+<w:i/>
+<w:iCs/>
+</xsl:if>
+<xsl:if test="$[[STYLENAME]]Underline">
+<w:u w:val="single"/>
+</xsl:if>
+<w:color>
+<xsl:attribute name="w:val">
+    <xsl:value-of select="$[[STYLENAME]]Forecolor"/>
+</xsl:attribute>
+</w:color>
+<xsl:if test="not($[[STYLENAME]]Backcolor='transparent')">
+<w:shd w:val="clear" w:color="auto" w:themeFill="accent1" w:themeFillTint="33">
+    <xsl:attribute name="w:fill">
+        <xsl:value-of select="$[[STYLENAME]]Backcolor"/>
+    </xsl:attribute>
+</w:shd>
+</xsl:if>
