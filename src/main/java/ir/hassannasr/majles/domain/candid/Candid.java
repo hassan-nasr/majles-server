@@ -1,8 +1,11 @@
 package ir.hassannasr.majles.domain.candid;
 
 import ir.hassannasr.majles.domain.base.BaseObject;
+import ir.hassannasr.majles.domain.idea.Idea.Idea;
+import ir.hassannasr.majles.domain.priority.PriorityItem;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by hassan on 07/12/2015.
@@ -22,6 +25,20 @@ public class Candid extends BaseObject {
     Integer dorehInMajles;
     String imageId;
 
+
+    List<PriorityItem> priorityItems;
+
+    List<Idea> ideas;
+
+    @OneToMany(mappedBy = "candid")
+    public List<Idea> getIdeas() {
+        return ideas;
+    }
+
+    public void setIdeas(List<Idea> ideas) {
+        this.ideas = ideas;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,6 +48,16 @@ public class Candid extends BaseObject {
 
         return !(id != null ? !id.equals(candid.id) : candid.id != null);
 
+    }
+
+
+    @OneToMany(mappedBy = "candid")
+    public List<PriorityItem> getPriorityItems() {
+        return priorityItems;
+    }
+
+    public void setPriorityItems(List<PriorityItem> priorityItems) {
+        this.priorityItems = priorityItems;
     }
 
     @Override
