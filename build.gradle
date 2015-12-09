@@ -11,6 +11,7 @@ allprojects {
     sourceCompatibility = theSourceCompatibility
 
     repositories {
+//        mavenCentral()
         maven {
             url "${artifactoryContextUrl}/libs-snapshot"
         }
@@ -50,7 +51,7 @@ dependencies {
     }
     compile(group: 'org.apache.solr', name: 'solr-solrj', version: '5.3.0')
     compile(group: 'org.apache.solr', name: 'solr-core', version: '5.3.0')
-    compile(group: 'com.idehgostar.libs', name: 'arabic-root-finder', version: '1.1.41-SNAPSHOT')
+//    compile(group: 'com.idehgostar.libs', name: 'arabic-root-finder', version: '1.1.41-SNAPSHOT')
     compile 'com.sun.jersey:jersey-core:1.19'       //TODO: please update jersey to 2.x
     compile 'com.sun.jersey:jersey-json:1.19'
     compile 'com.sun.jersey:jersey-client:1.19'
@@ -93,6 +94,8 @@ dependencies {
         exclude group: 'javax.servlet', module: 'servlet-api'
     }
     testCompile 'org.springframework:spring-test:4.2.0.RELEASE'
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.48.2'
+    testCompile 'org.jsoup:jsoup:1.8.3'
 
 
 }
