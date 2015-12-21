@@ -1,5 +1,7 @@
 package ir.hassannasr.majles.services.response;
 
+import ir.hassannasr.majles.domain.candid.Candid;
+
 import java.util.List;
 
 /**
@@ -9,16 +11,26 @@ public class CandidSimpleView {
     Long id;
     String name;
     String hozeh;
+    String subHozeh;
     String imageId;
 
     public CandidSimpleView() {
     }
 
-    public CandidSimpleView(Long id, String hozeh, String imageId, List<String> name) {
+    public CandidSimpleView(Long id, String hozeh, String subHozeh, String imageId, List<String> name) {
         this.hozeh = hozeh;
         this.id = id;
         this.imageId = imageId;
-        this.name = name.get(0) + " " + name.get(1);
+        this.name = name.get(0);
+        this.subHozeh = subHozeh;
+    }
+
+    public CandidSimpleView(Candid candid) {
+        this.hozeh = candid.getHozeh();
+        this.id = candid.getId();
+        this.imageId = candid.getImageId();
+        this.name = candid.getName();
+        this.subHozeh = candid.getSubHozeh();
     }
 
     public Long getId() {
@@ -51,5 +63,13 @@ public class CandidSimpleView {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSubHozeh() {
+        return subHozeh;
+    }
+
+    public void setSubHozeh(String subHozeh) {
+        this.subHozeh = subHozeh;
     }
 }

@@ -94,8 +94,8 @@ dependencies {
         exclude group: 'javax.servlet', module: 'servlet-api'
     }
     testCompile 'org.springframework:spring-test:4.2.0.RELEASE'
-    testCompile 'org.seleniumhq.selenium:selenium-java:2.48.2'
-    testCompile 'org.jsoup:jsoup:1.8.3'
+//    testCompile 'org.seleniumhq.selenium:selenium-java:2.48.2'
+    compile 'org.jsoup:jsoup:1.8.3'
 
 
 }

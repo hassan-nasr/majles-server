@@ -2,78 +2,47 @@ package ir.hassannasr.majles.domain.user;
 
 import ir.hassannasr.majles.domain.base.BaseObject;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by hassan on 02/11/2015.
  */
+
+
+@Entity
 public class User extends BaseObject {
     private Long id;
-    private String email;
-    private String firstnam;
-    private String lastname;
-    private String hashedPassword;
     private Date creationDate;
-    private String salt;
+    private Long endorseCredit;
+
+
+    private List<Endorse> endorseList = new ArrayList<>();
 
     public User() {
     }
 
-    /**
-     *
-     * @return user email
-     */
-    public String getEmail() {
-        return email;
+    public Long getEndorseCredit() {
+        return endorseCredit;
     }
 
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEndorseCredit(Long endorseCredit) {
+        this.endorseCredit = endorseCredit;
     }
 
-    /**
-     * @return user firstname
-     */
-    public String getFirstnam() {
-        return firstnam;
+    @OneToMany(mappedBy = "user")
+    public List<Endorse> getEndorseList() {
+        return endorseList;
     }
 
-    public void setFirstnam(String firstnam) {
-        this.firstnam = firstnam;
+    public void setEndorseList(List<Endorse> endorseList) {
+        this.endorseList = endorseList;
     }
 
-    /**
-     *
-     * @return user last name
-     */
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    /**
-     *
-     * @return hashed password for the user
-     */
-    public String getHashedPassword() {
-        return hashedPassword;
-    }
-
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
-    }
-
-    /**
-     *
-     * @return user creation date
-     */
     public Date getCreationDate() {
         return creationDate;
     }
@@ -82,10 +51,8 @@ public class User extends BaseObject {
         this.creationDate = creationDate;
     }
 
-
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -96,40 +63,26 @@ public class User extends BaseObject {
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", firstnam='" + firstnam + '\'' +
-                ", lastname='" + lastname + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
 
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        return !(id != null ? !id.equals(user.id) : user.id != null);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
+    @Override
+    public String toString() {
+        return "User{" +
+                "creationDate=" + creationDate +
+                ", id=" + id +
+                '}';
     }
 }

@@ -15,6 +15,7 @@
     </bean>
 
     <bean id="candidDao" class="ir.hassannasr.majles.domain.candid.CandidDaoImpl"/>
+    <bean id="userDao" class="ir.hassannasr.majles.domain.user.UserDaoImpl"/>
     <bean id="applicationServiceDao" class="com.idehgostar.makhsan.core.services.ApplicationServiceDaoImpl"/>
 
 

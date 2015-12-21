@@ -13,6 +13,9 @@
         <class>ir.hassannasr.majles.domain.idea.Idea.Idea</class>
         <class>ir.hassannasr.majles.domain.priority.PriorityItem</class>
         <class>ir.hassannasr.majles.domain.priority.PriorityType</class>
+        <class>ir.hassannasr.majles.domain.candid.DorehHistoryEntity</class>
+        <class>ir.hassannasr.majles.domain.candid.EndorseCount</class>
+        <class>ir.hassannasr.majles.domain.user.User</class>
 
 
 

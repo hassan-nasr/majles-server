@@ -1,4 +1,4 @@
-package crowling;
+package ir.hassannasr.majles.crowling;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -17,6 +17,8 @@ public class StringQueryElement extends QueryElement {
         String newText = SolrPluginUtils.partialEscape(text).toString();
         if (newText.contains("\\s+") && !newText.startsWith("\""))
             return tag + ":\"" + newText + "\"";
+        if (newText.isEmpty())
+            newText = "*";
         return tag + ":" + newText;
     }
 }

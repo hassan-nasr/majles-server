@@ -69,6 +69,7 @@
           <element id="library" level="project" name="Gradle: org.primefaces.extensions:primefaces-extensions:0.7.1" />
           <element id="library" level="project" name="Gradle: org.primefaces.themes:cupertino:1.0.9" />
           <element id="library" level="project" name="Gradle: javax.el:javax.el-api:3.0.0" />
+          <element id="library" level="project" name="Gradle: org.springframework:spring-context-support:3.2.5.RELEASE" />
           <element id="library" level="project" name="Gradle: org.quartz-scheduler:quartz:2.2.0" />
           <element id="library" level="project" name="Gradle: org.apache.activemq:activemq-core:5.5.1" />
           <element id="library" level="project" name="Gradle: org.activiti:activiti-engine:5.14" />
@@ -183,7 +184,7 @@
           <element id="library" level="project" name="Gradle: org.springframework:spring-tx:4.2.0.RELEASE" />
           <element id="library" level="project" name="Gradle: antlr:antlr:2.7.7" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.1-SNAPSHOT/ab1199dce291b21a377e1565792fefbf3207c26a/makhsan-auth-1.1-SNAPSHOT.jar" />
-          <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context-support/3.2.5.RELEASE/5731e3d76b57c80d557c4b3d7cce4750ce8d2102/spring-context-support-3.2.5.RELEASE.jar" />
+          <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.8.3/65fd012581ded67bc20945d85c32b4598c3a9cf1/jsoup-1.8.3.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jms/3.2.5.RELEASE/ef1bcf12d7fc08dc09f7c7c72c3aa07f9fec6408/spring-jms-3.2.5.RELEASE.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-oxm/3.2.5.RELEASE/cd2bb206443f02d99773e96c943fa740c8976143/spring-oxm-3.2.5.RELEASE.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-asl/1.9.13/3c304d70f42f832e0a86d45bd437f692129299a4/jackson-core-asl-1.9.13.jar" />

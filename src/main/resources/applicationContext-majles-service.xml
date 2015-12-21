@@ -39,6 +39,10 @@
     <bean id="candidManager" class="ir.hassannasr.majles.domain.candid.CandidManagerImpl">
         <constructor-arg ref="candidDao"/>
     </bean>
+    <bean id="userManager" class="ir.hassannasr.majles.domain.user.UserManagerImpl">
+        <constructor-arg ref="userDao"/>
+        <property name="BASE_ENDORSE_CREDIT" value="10"/>
+    </bean>
 
 
     <bean id="applicationServiceManager" class="com.idehgostar.makhsan.core.services.ApplicationServiceManagerImpl">

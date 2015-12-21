@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Set;
 
@@ -51,5 +52,9 @@ public class BaseWS {
       }catch (Exception e) {
          return null;
       }
+   }
+
+    protected Response sendError(String message) throws IOException {
+        return Response.status(403).entity(new SimpleResponse(SimpleResponse.Status.Failed, message)).build();
    }
 }

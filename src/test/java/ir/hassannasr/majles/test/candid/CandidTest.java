@@ -5,6 +5,7 @@ import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.services.response.CandidSearchResult;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import java.util.HashSet;
 /**
  * Created by hassan on 09/11/2015.
  */
+@Ignore
 public class CandidTest extends AbstractSpringAwareJerseyTest {
     @Test
     public void getCandidInfo() throws IOException {

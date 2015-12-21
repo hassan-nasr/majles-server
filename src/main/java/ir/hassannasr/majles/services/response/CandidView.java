@@ -1,18 +1,22 @@
-package ir.hassannasr.majles.domain.candid;
+package ir.hassannasr.majles.services.response;
 
 import ir.hassannasr.majles.domain.base.BaseObject;
+import ir.hassannasr.majles.domain.candid.Candid;
+import ir.hassannasr.majles.domain.candid.Degree;
+import ir.hassannasr.majles.domain.candid.DorehHistoryEntity;
+import ir.hassannasr.majles.domain.candid.EndorseCount;
 import ir.hassannasr.majles.domain.idea.Idea.Idea;
 import ir.hassannasr.majles.domain.priority.PriorityItem;
 
 import javax.persistence.*;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by hassan on 07/12/2015.
  */
-@Entity
-public class Candid extends BaseObject {
+public class CandidView extends BaseObject {
     Long id;
     String name;
     Integer age;
@@ -26,26 +30,59 @@ public class Candid extends BaseObject {
     String imageId;
     String resume;
     String rss;
-
-    EndorseCount endorseCount;
     List<PriorityItem> priorityItems;
     List<Idea> ideas;
-    List<Long> supporterIds;
+    List<CandidSimpleView> supporters = new ArrayList<>();
+    List<CandidEndorse> endorseList = new ArrayList<>();
     private String subHozeh;
     private String bio;
     private String website;
     private String languages;
     private List<DorehHistoryEntity> dorehHistoryEntities = new ArrayList<>();
 
-    @Embedded
-    public EndorseCount getEndorseCount() {
-        if (endorseCount == null)
-            endorseCount = new EndorseCount();
-        return endorseCount;
+    public CandidView(Candid candid) {
+        this.id = candid.getId();
+        this.name = candid.getName();
+        this.age = candid.getAge();
+        this.nid = candid.getNid();
+        this.hozeh = candid.getHozeh();
+        this.bornLocation = candid.getBornLocation();
+        this.degree = candid.getDegree();
+        this.studyField = candid.getStudyField();
+        this.gerayesh = candid.getGerayesh();
+        this.dorehInMajles = candid.getDorehInMajles();
+        this.imageId = candid.getImageId();
+        this.resume = candid.getResume();
+        this.rss = candid.getRss();
+        this.priorityItems = candid.getPriorityItems();
+        this.ideas = candid.getIdeas();
+        this.bio = candid.getBio();
+        this.subHozeh = candid.getSubHozeh();
+        this.website = candid.getWebsite();
+        this.languages = candid.getLanguages();
+        this.dorehHistoryEntities = candid.getDorehHistoryEntities();
+        for (DorehHistoryEntity dorehHistoryEntity : this.dorehHistoryEntities) {
+            dorehHistoryEntity.setLegalDrafts("");
+        }
+        try {
+            for (Field field : EndorseCount.class.getDeclaredFields()) {
+                Long value = (Long) field.get(candid.getEndorseCount());
+                if (value == null)
+                    value = 0L;
+                endorseList.add(new CandidEndorse(field.getName(), value));
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public void setEndorseCount(EndorseCount endorseCount) {
-        this.endorseCount = endorseCount;
+    public List<CandidEndorse> getEndorseList() {
+        return endorseList;
+    }
+
+    public void setEndorseList(List<CandidEndorse> endorseList) {
+        this.endorseList = endorseList;
     }
 
     public String getRss() {
@@ -56,13 +93,12 @@ public class Candid extends BaseObject {
         this.rss = rss;
     }
 
-    @ElementCollection
-    public List<Long> getSupporterIds() {
-        return supporterIds;
+    public List<CandidSimpleView> getSupporters() {
+        return supporters;
     }
 
-    public void setSupporterIds(List<Long> supproters) {
-        this.supporterIds = supproters;
+    public void setSupporters(List<CandidSimpleView> supporters) {
+        this.supporters = supporters;
     }
 
     @OneToMany(mappedBy = "candid")
@@ -79,7 +115,7 @@ public class Candid extends BaseObject {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Candid candid = (Candid) o;
+        CandidView candid = (CandidView) o;
 
         return !(id != null ? !id.equals(candid.id) : candid.id != null);
 

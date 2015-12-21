@@ -1,4 +1,4 @@
-package crowling;
+package ir.hassannasr.majles.crowling;
 
 import org.apache.lucene.analysis.fa.PersianNormalizer;
 
@@ -18,9 +18,4 @@ public class Utils {
         return null;
     }
 
-    public static String persianNormalize(String a) {
-        final char[] s = a.toCharArray();
-        int newLen = new PersianNormalizer().normalize(s, a.length());
-        return new String(s, 0, newLen).replace('ي', 'ی');
-    }
 }

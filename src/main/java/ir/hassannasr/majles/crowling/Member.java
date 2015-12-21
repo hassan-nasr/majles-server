@@ -1,4 +1,4 @@
-package crowling;
+package ir.hassannasr.majles.crowling;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,9 @@ public class Member {
     List<String> resume = new ArrayList<>();
     List<String> study = new ArrayList<>();
     List<DorehHistory> dorehHistories = new ArrayList<>();
+    private String imageFileName;
+    private String bio = "";
+    private String website;
 
     public String getBirthPlace() {
         return birthPlace;
@@ -78,5 +81,29 @@ public class Member {
 
     public void setStudy(List<String> study) {
         this.study = study;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }

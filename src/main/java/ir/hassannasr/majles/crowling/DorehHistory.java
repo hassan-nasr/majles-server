@@ -1,4 +1,4 @@
-package crowling;
+package ir.hassannasr.majles.crowling;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +13,7 @@ public class DorehHistory {
     Set<String> commisions = new HashSet<>();
     Set<String> legalDraft = new HashSet<>();
     private String subHozeh;
+    private String doreh;
 
     public Set<String> getCommisions() {
         return commisions;
@@ -60,5 +61,13 @@ public class DorehHistory {
 
     public void setSubHozeh(String subHozeh) {
         this.subHozeh = subHozeh;
+    }
+
+    public String getDoreh() {
+        return doreh;
+    }
+
+    public void setDoreh(String doreh) {
+        this.doreh = doreh;
     }
 }

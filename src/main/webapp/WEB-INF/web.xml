@@ -14,9 +14,21 @@
             classpath:/applicationContext-majles-persistence.xml
             classpath:/applicationContext-majles-security.xml
             classpath:/applicationContext-majles-service.xml
+            classpath:/applicationContext-majles-solr.xml
             classpath:/applicationContext-majles.xml
         </param-value>
     </context-param>
+
+    <servlet>
+        <display-name>CandidImage</display-name>
+        <servlet-name>CandidImage</servlet-name>
+        <servlet-class>ir.hassannasr.majles.services.candid.ImageServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CandidImage</servlet-name>
+        <url-pattern>/candidImage</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <display-name>HelloWorldServlet</display-name>
