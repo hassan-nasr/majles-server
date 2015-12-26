@@ -1,6 +1,7 @@
 package ir.hassannasr.majles.domain.candid;
 
 import ir.hassannasr.majles.domain.base.BaseObject;
+import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 import ir.hassannasr.majles.domain.idea.Idea.Idea;
 import ir.hassannasr.majles.domain.priority.PriorityItem;
 
@@ -35,7 +36,17 @@ public class Candid extends BaseObject {
     private String bio;
     private String website;
     private String languages;
+    private SubHozeh subHozehObj;
     private List<DorehHistoryEntity> dorehHistoryEntities = new ArrayList<>();
+
+    @ManyToOne
+    public SubHozeh getSubHozehObj() {
+        return subHozehObj;
+    }
+
+    public void setSubHozehObj(SubHozeh subHozehObj) {
+        this.subHozehObj = subHozehObj;
+    }
 
     @Embedded
     public EndorseCount getEndorseCount() {

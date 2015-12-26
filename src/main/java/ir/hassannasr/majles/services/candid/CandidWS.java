@@ -126,4 +126,16 @@ public class CandidWS extends BaseWS {
         }
     }
 
+    @GET
+    @Path("/allHozeh")
+    @Produces("application/json")
+    public String getAllHozeh() {
+        try {
+            return getJsonCreator().getJson(candidManager.getAllHozeh());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

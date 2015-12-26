@@ -16,6 +16,7 @@
         <class>ir.hassannasr.majles.domain.candid.DorehHistoryEntity</class>
         <class>ir.hassannasr.majles.domain.candid.EndorseCount</class>
         <class>ir.hassannasr.majles.domain.user.User</class>
+        <class>ir.hassannasr.majles.domain.hozeh.SubHozeh</class>
 
 
 

@@ -228,9 +228,9 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.sun.grizzly:grizzly-http-servlet-deployer:1.9.64" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.springframework:spring-test:4.2.0.RELEASE" level="project" />
     <orderEntry type="module-library" exported="">
-      <library name="Gradle: com.idehgostar:makhsan-auth:1.1-SNAPSHOT">
+      <library name="Gradle: com.idehgostar:makhsan-auth:1.2-SNAPSHOT">
         <CLASSES>
-          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.1-SNAPSHOT/ab1199dce291b21a377e1565792fefbf3207c26a/makhsan-auth-1.1-SNAPSHOT.jar!/" />
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.2-SNAPSHOT/ab3acc56f3c857487c2c4c0e6a799c0540774963/makhsan-auth-1.2-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -1,7 +1,10 @@
 package ir.hassannasr.majles.services.user;
 
+import com.idehgostar.makhsan.core.auth.TokenManager;
+import com.idehgostar.makhsan.core.services.ApplicationServiceManager;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidManager;
+import ir.hassannasr.majles.domain.candid.HozehDao;
 import ir.hassannasr.majles.domain.exceptoin.InvalidParameterException;
 import ir.hassannasr.majles.domain.user.Endorse;
 import ir.hassannasr.majles.domain.user.User;
@@ -9,6 +12,7 @@ import ir.hassannasr.majles.domain.user.UserManager;
 import ir.hassannasr.majles.services.BaseWS;
 import ir.hassannasr.majles.services.response.CandidView;
 import ir.hassannasr.majles.services.response.EndorseResponse;
+import ir.hassannasr.majles.services.response.SimpleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +37,15 @@ public class UserWS extends BaseWS {
     @Autowired
     CandidManager candidManager;
 
+    @Autowired
+    TokenManager tokenManager;
+
+    @Autowired
+    HozehDao hozehDao;
+
+    @Autowired
+    ApplicationServiceManager applicationServiceManager;
+
     @GET
     @Path("/userInfo")
     @Produces("application/json")
@@ -49,7 +62,34 @@ public class UserWS extends BaseWS {
                 if (user == null)
                     user = userManager.createNewUser(userId);
                 return Response.ok(getJsonCreator().getJson(user)).build();
+            } else {
+                return sendError("Access Denied");
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+            try {
+                sendError("ServerError");
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @GET
+    @Path("/setHozeh")
+    @Produces("application/json")
+    public Response setHozeh(@QueryParam("hozehId") Long hozehId) {
+        try {
+            if (getUserInSite() == null)
+                return sendError("NotLoggedIn");
+            final User user = userManager.get(Long.valueOf(getUserInSite()));
+            if (user == null) {
+                return sendError("UserNotFound");
+            }
+            user.setSubHozeh(hozehDao.load(hozehId));
+            userManager.save(user);
+            return Response.ok(new SimpleResponse(SimpleResponse.Status.Success, "Done")).build();
         } catch (IOException e) {
             e.printStackTrace();
             try {

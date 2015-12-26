@@ -1,9 +1,11 @@
 package ir.hassannasr.majles.domain.user;
 
 import ir.hassannasr.majles.domain.base.BaseObject;
+import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,11 +21,20 @@ public class User extends BaseObject {
     private Long id;
     private Date creationDate;
     private Long endorseCredit;
-
+    private SubHozeh subHozeh;
 
     private List<Endorse> endorseList = new ArrayList<>();
 
     public User() {
+    }
+
+    @ManyToOne
+    public SubHozeh getSubHozeh() {
+        return subHozeh;
+    }
+
+    public void setSubHozeh(SubHozeh subHozeh) {
+        this.subHozeh = subHozeh;
     }
 
     public Long getEndorseCredit() {
