@@ -15,6 +15,15 @@ public class SubHozeh extends BaseObject {
     Long id;
     String hozeh;
     String name;
+    Integer capacity;
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
 
     public String getHozeh() {
         return hozeh;

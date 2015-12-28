@@ -1,14 +1,13 @@
 package ir.hassannasr.majles.services.response;
 
 import ir.hassannasr.majles.domain.user.Endorse;
-import ir.hassannasr.majles.domain.user.User;
 
 /**
  * Created by hassan on 21/12/2015.
  */
 public class EndorseResponse {
     Endorse endorse;
-    User user;
+    UserView user;
     CandidView candid;
 
     public CandidView getCandid() {
@@ -27,11 +26,11 @@ public class EndorseResponse {
         this.endorse = endorse;
     }
 
-    public User getUser() {
+    public UserView getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserView user) {
         this.user = user;
     }
 }

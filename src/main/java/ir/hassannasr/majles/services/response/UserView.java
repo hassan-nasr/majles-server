@@ -1,19 +1,22 @@
-package ir.hassannasr.majles.domain.user;
+package ir.hassannasr.majles.services.response;
 
-import ir.hassannasr.majles.domain.base.BaseObject;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
+import ir.hassannasr.majles.domain.user.Endorse;
+import ir.hassannasr.majles.domain.user.User;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by hassan on 02/11/2015.
  */
 
 
-@Entity
-public class User extends BaseObject {
+public class UserView {
     private Long id;
     private Date creationDate;
     private Long endorseCredit;
@@ -21,11 +24,30 @@ public class User extends BaseObject {
     private Boolean verified;
     private String name;
     private String imageId;
-    private Set<Candid> myChoseCandids = new HashSet<>();
-    private Set<Candid> myFollowingCandids = new HashSet<>();
+    private List<CandidSimpleView> myChoseCandids = new ArrayList<>();
+    private List<CandidSimpleView> myFollowingCandids = new ArrayList<>();
     private List<Endorse> endorseList = new ArrayList<>();
 
-    public User() {
+    public UserView(User user) {
+        id = user.getId();
+        creationDate = user.getCreationDate();
+        endorseCredit = user.getEndorseCredit();
+        subHozeh = user.getSubHozeh();
+        verified = user.getVerified();
+        name = user.getName();
+        imageId = user.getImageId();
+        if (user.getMyChoseCandids() != null)
+            for (Candid candid : user.getMyChoseCandids()) {
+                myChoseCandids.add(new CandidSimpleView(candid));
+            }
+        if (user.getMyFollowingCandids() != null)
+            for (Candid candid : user.getMyFollowingCandids()) {
+                myFollowingCandids.add(new CandidSimpleView(candid));
+            }
+        endorseList = user.getEndorseList();
+    }
+
+    public UserView() {
     }
 
     public String getImageId() {
@@ -70,26 +92,12 @@ public class User extends BaseObject {
         this.creationDate = creationDate;
     }
 
-    @Override
-    @Id
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        User user = (User) o;
-
-        return !(id != null ? !id.equals(user.id) : user.id != null);
-
     }
 
     @Override
@@ -123,23 +131,19 @@ public class User extends BaseObject {
         this.verified = verified;
     }
 
-    @ManyToMany()
-    @JoinTable(name = "user_choiceCandid")
-    public Set<Candid> getMyChoseCandids() {
+    public List<CandidSimpleView> getMyChoseCandids() {
         return myChoseCandids;
     }
 
-    public void setMyChoseCandids(Set<Candid> myChoseCandids) {
+    public void setMyChoseCandids(List<CandidSimpleView> myChoseCandids) {
         this.myChoseCandids = myChoseCandids;
     }
 
-    @ManyToMany()
-    @JoinTable(name = "user_followCandid")
-    public Set<Candid> getMyFollowingCandids() {
+    public List<CandidSimpleView> getMyFollowingCandids() {
         return myFollowingCandids;
     }
 
-    public void setMyFollowingCandids(Set<Candid> myFollowingCandids) {
+    public void setMyFollowingCandids(List<CandidSimpleView> myFollowingCandids) {
         this.myFollowingCandids = myFollowingCandids;
     }
 }
