@@ -62,7 +62,7 @@ public class UserWS extends BaseWS {
                 }
                 if (user == null)
                     user = userManager.createNewUser(userId);
-                return Response.ok(getJsonCreator().getJson(new UserView(user))).build();
+                return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
             } else {
                 return sendError("Access Denied");
             }
@@ -128,7 +128,7 @@ public class UserWS extends BaseWS {
 //            candidManager.evict(c);
 //            c=candidManager.get(c.getId());
             response.setCandid(new CandidView(c));
-            response.setUser(new UserView(user));
+            response.setUser(new UserView(user, candidManager));
             return Response.ok(getJsonCreator().getJson(response)).build();
 
         } catch (IOException | InvalidParameterException e) {
@@ -156,13 +156,13 @@ public class UserWS extends BaseWS {
             else {
                 user.getMyChoseCandids().add(candidManager.load(candidId));
                 user = userManager.save(user);
-                return Response.ok(getJsonCreator().getJson(new UserView(user))).build();
+                return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
             }
         }
         if ("follow".equals(listName)) {
             user.getMyFollowingCandids().add(candidManager.load(candidId));
             user = userManager.save(user);
-            return Response.ok(getJsonCreator().getJson(new UserView(user))).build();
+            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
         }
         return sendError("خطا در انتخاب لیست");
     }
@@ -177,12 +177,12 @@ public class UserWS extends BaseWS {
         if ("choose".equals(listName)) {
             user.getMyChoseCandids().remove(candidManager.load(candidId));
             user = userManager.save(user);
-            return Response.ok(getJsonCreator().getJson(new UserView(user))).build();
+            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
         }
         if ("follow".equals(listName)) {
             user.getMyFollowingCandids().remove(candidManager.load(candidId));
             user = userManager.save(user);
-            return Response.ok(getJsonCreator().getJson(new UserView(user))).build();
+            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
         }
         return sendError("خطا در انتخاب لیست");
     }

@@ -1,6 +1,7 @@
 package ir.hassannasr.majles.services.response;
 
 import ir.hassannasr.majles.domain.candid.Candid;
+import ir.hassannasr.majles.domain.candid.CandidManager;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 import ir.hassannasr.majles.domain.user.Endorse;
 import ir.hassannasr.majles.domain.user.User;
@@ -26,9 +27,9 @@ public class UserView {
     private String imageId;
     private List<CandidSimpleView> myChoseCandids = new ArrayList<>();
     private List<CandidSimpleView> myFollowingCandids = new ArrayList<>();
-    private List<Endorse> endorseList = new ArrayList<>();
+    private List<EndorseView> endorseList = new ArrayList<>();
 
-    public UserView(User user) {
+    public UserView(User user, CandidManager candidManager) {
         id = user.getId();
         creationDate = user.getCreationDate();
         endorseCredit = user.getEndorseCredit();
@@ -44,7 +45,10 @@ public class UserView {
             for (Candid candid : user.getMyFollowingCandids()) {
                 myFollowingCandids.add(new CandidSimpleView(candid));
             }
-        endorseList = user.getEndorseList();
+        for (Endorse endorse : user.getEndorseList()) {
+            if (endorse.getCredit() > 0)
+                endorseList.add(new EndorseView(endorse, candidManager.getCached(endorse.getCandidId())));
+        }
     }
 
     public UserView() {
@@ -76,11 +80,11 @@ public class UserView {
     }
 
     @OneToMany(mappedBy = "user")
-    public List<Endorse> getEndorseList() {
+    public List<EndorseView> getEndorseList() {
         return endorseList;
     }
 
-    public void setEndorseList(List<Endorse> endorseList) {
+    public void setEndorseList(List<EndorseView> endorseList) {
         this.endorseList = endorseList;
     }
 

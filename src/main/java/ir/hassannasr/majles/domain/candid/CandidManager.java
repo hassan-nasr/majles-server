@@ -11,4 +11,6 @@ import java.util.List;
 public interface CandidManager extends GenericManager<Candid, Long> {
 
     List<SubHozeh> getAllHozeh();
+
+    Candid getCached(Long candidId);
 }
