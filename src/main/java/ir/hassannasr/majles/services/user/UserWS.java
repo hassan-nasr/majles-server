@@ -6,23 +6,16 @@ import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidManager;
 import ir.hassannasr.majles.domain.candid.HozehDao;
 import ir.hassannasr.majles.domain.exceptoin.InvalidParameterException;
-import ir.hassannasr.majles.domain.user.Endorse;
-import ir.hassannasr.majles.domain.user.User;
-import ir.hassannasr.majles.domain.user.UserManager;
+import ir.hassannasr.majles.domain.user.*;
 import ir.hassannasr.majles.services.BaseWS;
-import ir.hassannasr.majles.services.response.CandidView;
-import ir.hassannasr.majles.services.response.EndorseResponse;
-import ir.hassannasr.majles.services.response.SimpleResponse;
-import ir.hassannasr.majles.services.response.UserView;
+import ir.hassannasr.majles.services.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by hassan on 20/12/2015.
@@ -37,12 +30,12 @@ public class UserWS extends BaseWS {
     UserManager userManager;
     @Autowired
     CandidManager candidManager;
-
     @Autowired
     TokenManager tokenManager;
-
     @Autowired
     HozehDao hozehDao;
+    @Autowired
+    PhoneConnectionDao phoneConnectionDao;
 
     @Autowired
     ApplicationServiceManager applicationServiceManager;
@@ -61,10 +54,18 @@ public class UserWS extends BaseWS {
                 } catch (Exception e) {
                 }
                 if (user == null)
-                    user = userManager.createNewUser(userId);
-                return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
+                    user = userManager.createNewUser(userId, getTokenData().getPhone());
+                return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager, true))).build();
             } else {
-                return sendError("Access Denied");
+                try {
+                    User requestedUser = userManager.get(userId);
+                    User userInSite = userManager.get(Long.valueOf(getUserInSite()));
+                    if (phoneConnectionDao.isConnectionExist(requestedUser.getPhone(), userInSite.getPhone())) {
+                        return Response.ok(new UserView(requestedUser, candidManager, false)).build();
+                    }
+                } catch (Exception e) {
+                }
+                return sendError("خطای دسترسی");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,7 +116,7 @@ public class UserWS extends BaseWS {
             User user = userManager.get(userId);
 
             if (user.getEndorseCredit() < credit) {
-                return sendError("lowCredit");
+                return sendError("شما اعتبار کافی برای این کار ندارید");
             }
             Candid c = candidManager.get(candidId);
             if (c == null) {
@@ -128,7 +129,7 @@ public class UserWS extends BaseWS {
 //            candidManager.evict(c);
 //            c=candidManager.get(c.getId());
             response.setCandid(new CandidView(c));
-            response.setUser(new UserView(user, candidManager));
+            response.setUser(new UserView(user, candidManager, true));
             return Response.ok(getJsonCreator().getJson(response)).build();
 
         } catch (IOException | InvalidParameterException e) {
@@ -156,13 +157,13 @@ public class UserWS extends BaseWS {
             else {
                 user.getMyChoseCandids().add(candidManager.load(candidId));
                 user = userManager.save(user);
-                return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
+                return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager, true))).build();
             }
         }
         if ("follow".equals(listName)) {
             user.getMyFollowingCandids().add(candidManager.load(candidId));
             user = userManager.save(user);
-            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
+            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager, true))).build();
         }
         return sendError("خطا در انتخاب لیست");
     }
@@ -177,15 +178,68 @@ public class UserWS extends BaseWS {
         if ("choose".equals(listName)) {
             user.getMyChoseCandids().remove(candidManager.load(candidId));
             user = userManager.save(user);
-            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
+            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager, true))).build();
         }
         if ("follow".equals(listName)) {
             user.getMyFollowingCandids().remove(candidManager.load(candidId));
             user = userManager.save(user);
-            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager))).build();
+            return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager, true))).build();
         }
         return sendError("خطا در انتخاب لیست");
     }
+
+    @POST
+    @Path("/uploadContacts")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response uploadContacts(List<String> phones) throws IOException {
+        if (getUserInSite() == null)
+            return sendError("NotLoggedIn");
+        final User user = userManager.get(Long.valueOf(getUserInSite()));
+        final Map<String, PhoneConnection> currentConnections = phoneConnectionDao.getConnectionsFrom(user.getPhone());
+        Set<String> added = new HashSet<>();
+        for (int i = 0; i < phones.size(); i++) {
+            String phone = new Normalizer().normalizePhone(phones.get(i));
+
+            if (!currentConnections.containsKey(phone) && !added.contains(phone)) {
+                phoneConnectionDao.save(new PhoneConnection(user.getPhone(), phone));
+                added.add(phone);
+            }
+        }
+        return sendSuccess("Done");
+    }
+
+    @GET
+    @Path("/getMyFriends")
+    @Produces("application/json")
+    public Response getMyFriends() throws IOException {
+        if (getUserInSite() == null)
+            return sendError("NotLoggedIn");
+        final User user = userManager.get(Long.valueOf(getUserInSite()));
+        final Map<String, PhoneConnection> toConnections = phoneConnectionDao.getConnectionsTo(user.getPhone());
+        final Map<String, PhoneConnection> fromConnectins = phoneConnectionDao.getConnectionsFrom(user.getPhone());
+        Set<String> s1 = toConnections.keySet();
+        Set<String> s2 = fromConnectins.keySet();
+        if (s1.size() > s2.size()) {
+            Set<String> temp = s1;
+            s1 = s2;
+            s2 = temp;
+        }
+        Set<String> intersect = new HashSet<>();
+        for (String s : s1) {
+            if (s2.contains(s))
+                intersect.add(s);
+        }
+
+        List<UserSimpleView> userSimpleViewList = new ArrayList<>();
+        List<User> users = userManager.getWithPhoneNumber(intersect);
+        List<UserSimpleView> ret = new ArrayList<>();
+        for (User user1 : users) {
+            ret.add(new UserSimpleView(user1));
+        }
+        return Response.ok(ret).build();
+    }
+
 
 
     public UserManager getUserManager() {

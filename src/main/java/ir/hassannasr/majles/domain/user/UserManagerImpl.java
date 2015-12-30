@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Query;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by hassan on 02/11/2015.
@@ -38,11 +40,13 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     }
 
     @Override
-    public User createNewUser(Long userId) {
+    public User createNewUser(Long userId, String phone) {
+        phone = new Normalizer().normalizePhone(phone);
         User user = new User();
         user.setId(userId);
         user.setCreationDate(new Date());
         user.setEndorseCredit(BASE_ENDORSE_CREDIT);
+        user.setPhone(phone);
         final User save = userDao.save(user);
         return save;
     }
@@ -73,6 +77,11 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         if (!increaseEndorseWithQuery(c, context, addedCredit))
             throw new InvalidParameterException("invalid.context");
         return e;
+    }
+
+    @Override
+    public List<User> getWithPhoneNumber(Set<String> intersect) {
+        return userDao.getWithPhoneNumber(intersect);
     }
 
     private boolean increaseEndorseWithQuery(Candid c, String context, Integer credit) {

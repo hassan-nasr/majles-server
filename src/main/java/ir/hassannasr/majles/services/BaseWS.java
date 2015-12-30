@@ -1,5 +1,6 @@
 package ir.hassannasr.majles.services;
 
+import com.idehgostar.makhsan.core.auth.TokenData;
 import core.base.QuerySourcesUtil;
 import ir.hassannasr.majles.core.JsonCreator.JacksonJsonCreator;
 import ir.hassannasr.majles.services.response.SimpleResponse;
@@ -54,7 +55,19 @@ public class BaseWS {
       }
    }
 
+   protected TokenData getTokenData() {
+      try {
+         return ((TokenData) request.getAttribute("token"));
+      } catch (Exception e) {
+         return null;
+      }
+   }
+
     protected Response sendError(String message) throws IOException {
         return Response.status(403).entity(new SimpleResponse(SimpleResponse.Status.Failed, message)).build();
+    }
+
+   protected Response sendSuccess(String message) throws IOException {
+      return Response.ok(new SimpleResponse(SimpleResponse.Status.Success, message)).build();
    }
 }

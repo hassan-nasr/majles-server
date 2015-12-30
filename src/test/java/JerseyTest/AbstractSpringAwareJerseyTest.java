@@ -136,7 +136,7 @@ public abstract class AbstractSpringAwareJerseyTest extends JerseyTest {
 
 			Date eDate = simpleDateFormat.parse("11/11/2020");
 
-			TokenData tokenData = new TokenData(userId, null, new Date(), eDate, permissions);
+			TokenData tokenData = new TokenData(userId, null, null, null, new Date(), eDate, permissions);
 			return tokenManager.createTokenString(tokenData, defaultService);
 		} catch (ParseException e) {
 			e.printStackTrace();

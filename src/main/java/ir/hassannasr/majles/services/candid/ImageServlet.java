@@ -33,10 +33,10 @@ public class ImageServlet extends HttpServlet {
             return;
         }
 
-        resp.setContentType("image/jpeg");
+        resp.setContentType("image/png");
         BufferedImage bi = ImageIO.read(file);
         OutputStream out = resp.getOutputStream();
-        ImageIO.write(bi, "jpg", out);
+        ImageIO.write(bi, "png", out);
         out.close();
 
     }

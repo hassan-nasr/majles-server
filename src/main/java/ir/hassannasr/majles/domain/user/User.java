@@ -13,6 +13,9 @@ import java.util.*;
 
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "loadUsersWithPhone", query = "from User u where u.phone in :phone")
+})
 public class User extends BaseObject {
     private Long id;
     private Date creationDate;
@@ -21,6 +24,7 @@ public class User extends BaseObject {
     private Boolean verified;
     private String name;
     private String imageId;
+    private String phone;
     private Set<Candid> myChoseCandids = new HashSet<>();
     private Set<Candid> myFollowingCandids = new HashSet<>();
     private List<Endorse> endorseList = new ArrayList<>();
@@ -141,5 +145,13 @@ public class User extends BaseObject {
 
     public void setMyFollowingCandids(Set<Candid> myFollowingCandids) {
         this.myFollowingCandids = myFollowingCandids;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

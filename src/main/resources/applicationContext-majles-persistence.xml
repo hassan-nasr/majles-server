@@ -17,6 +17,7 @@
     <bean id="candidDao" class="ir.hassannasr.majles.domain.candid.CandidDaoImpl"/>
     <bean id="hozehDao" class="ir.hassannasr.majles.domain.candid.HozehDaoImpl"/>
     <bean id="userDao" class="ir.hassannasr.majles.domain.user.UserDaoImpl"/>
+    <bean id="phoneConnectionDao" class="ir.hassannasr.majles.domain.user.PhoneConnectionDaoImpl"/>
     <bean id="applicationServiceDao" class="com.idehgostar.makhsan.core.services.ApplicationServiceDaoImpl"/>
 
 

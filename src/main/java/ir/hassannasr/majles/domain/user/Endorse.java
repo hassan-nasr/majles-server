@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "loadEndorseByUserCandidContext", query = "from Endorse e where e.candidId=:candidId and e.endorseContext=:endorseContext and e.user.id=:userId")
+        @NamedQuery(name = "loadEndorseByUserCandidContext", query = "from Endorse e where e.candidId=:candidId and e.endorseContext=:endorseContext and e.user.id=:userId"),
 })
 public class Endorse extends BaseObject {
     Long id;

@@ -25,29 +25,36 @@ public class UserView {
     private Boolean verified;
     private String name;
     private String imageId;
+    private String phone;
     private List<CandidSimpleView> myChoseCandids = new ArrayList<>();
     private List<CandidSimpleView> myFollowingCandids = new ArrayList<>();
     private List<EndorseView> endorseList = new ArrayList<>();
 
-    public UserView(User user, CandidManager candidManager) {
+    public UserView(User user, CandidManager candidManager, boolean showPrivate) {
         id = user.getId();
-        creationDate = user.getCreationDate();
-        endorseCredit = user.getEndorseCredit();
-        subHozeh = user.getSubHozeh();
-        verified = user.getVerified();
-        name = user.getName();
-        imageId = user.getImageId();
+
         if (user.getMyChoseCandids() != null)
             for (Candid candid : user.getMyChoseCandids()) {
                 myChoseCandids.add(new CandidSimpleView(candid));
             }
-        if (user.getMyFollowingCandids() != null)
-            for (Candid candid : user.getMyFollowingCandids()) {
-                myFollowingCandids.add(new CandidSimpleView(candid));
+        subHozeh = user.getSubHozeh();
+        verified = user.getVerified();
+        name = user.getName();
+        imageId = user.getImageId();
+        phone = user.getPhone();
+
+        if (showPrivate) {
+            creationDate = user.getCreationDate();
+            endorseCredit = user.getEndorseCredit();
+            if (user.getMyFollowingCandids() != null)
+                for (Candid candid : user.getMyFollowingCandids()) {
+                    myFollowingCandids.add(new CandidSimpleView(candid));
+                }
+            for (Endorse endorse : user.getEndorseList()) {
+                if (endorse.getCredit() > 0)
+                    endorseList.add(new EndorseView(endorse, candidManager.getCached(endorse.getCandidId())));
             }
-        for (Endorse endorse : user.getEndorseList()) {
-            if (endorse.getCredit() > 0)
-                endorseList.add(new EndorseView(endorse, candidManager.getCached(endorse.getCandidId())));
+
         }
     }
 
@@ -149,5 +156,13 @@ public class UserView {
 
     public void setMyFollowingCandids(List<CandidSimpleView> myFollowingCandids) {
         this.myFollowingCandids = myFollowingCandids;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

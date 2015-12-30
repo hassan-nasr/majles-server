@@ -228,12 +228,25 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.sun.grizzly:grizzly-http-servlet-deployer:1.9.64" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.springframework:spring-test:4.2.0.RELEASE" level="project" />
     <orderEntry type="module-library" exported="">
-      <library name="Gradle: com.idehgostar:makhsan-auth:1.2-SNAPSHOT">
+      <library name="Gradle: com.github.jai-imageio:jai-imageio-core:1.3.1">
         <CLASSES>
-          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.2-SNAPSHOT/ab3acc56f3c857487c2c4c0e6a799c0540774963/makhsan-auth-1.2-SNAPSHOT.jar!/" />
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.github.jai-imageio/jai-imageio-core/1.3.1/300f3f0dedfca37b3278991f9397354971b37156/jai-imageio-core-1.3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.github.jai-imageio/jai-imageio-core/1.3.1/8b3dbf7510367013dc5790a7d6e14dd7aa60e4e4/jai-imageio-core-1.3.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="Gradle: com.github.jai-imageio:jai-imageio-jpeg2000:1.3.0">
+        <CLASSES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.github.jai-imageio/jai-imageio-jpeg2000/1.3.0/94cba6faa03d2a279d00b284b76231ae2f2f67e8/jai-imageio-jpeg2000-1.3.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.github.jai-imageio/jai-imageio-jpeg2000/1.3.0/94fd72266373a48d36aa809b20d64aa0bf860a28/jai-imageio-jpeg2000-1.3.0-sources.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
@@ -760,6 +773,24 @@
         <SOURCES>
           <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.jboss/jandex/1.1.0.Final/cd042b769b296fd1bc20ca5120824caa42b6c9ed/jandex-1.1.0.Final-sources.jar!/" />
         </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library name="Gradle: com.idehgostar:makhsan-auth:1.2-SNAPSHOT">
+        <CLASSES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.2-SNAPSHOT/2f02b92e5134b3a3b51cb5759749935a099442e3/makhsan-auth-1.2-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Gradle: com.idehgostar:makhsan-auth:1.2-SNAPSHOT">
+        <CLASSES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.2-SNAPSHOT/2f02b92e5134b3a3b51cb5759749935a099442e3/makhsan-auth-1.2-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="TEST">
