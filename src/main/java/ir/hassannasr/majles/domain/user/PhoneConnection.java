@@ -10,8 +10,10 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "isConnectionExist", query = "from PhoneConnection p where p.ownerPhone=:ownerPhone and p.friendPhone=:friendPhone"),
-        @NamedQuery(name = "getPhoneConnectionsFrom", query = "from PhoneConnection p where p.ownerPhone=:ownerPhone"),
-        @NamedQuery(name = "getPhoneConnectionsTo", query = "from PhoneConnection p where p.friendPhone=:friendPhone")
+        @NamedQuery(name = "getPhoneConnectionsFrom", query = "from PhoneConnection p where p.ownerPhone=:ownerPhone "),
+        @NamedQuery(name = "getPhoneConnectionsTo", query = "from PhoneConnection p where p.friendPhone=:friendPhone "),
+        @NamedQuery(name = "removeFriend", query = "delete from PhoneConnection p where p.friendPhone=:friendPhone  and p.ownerPhone=:ownerPhone")
+
 })
 public class PhoneConnection extends BaseObject {
     Long id;

@@ -4,6 +4,7 @@ import core.service.GenericManager;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.exceptoin.InvalidParameterException;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
@@ -18,4 +19,10 @@ public interface UserManager extends GenericManager<User
     public Endorse endorse(User user, Candid c, String context, Integer credit) throws InvalidParameterException;
 
     List<User> getWithPhoneNumber(Set<String> intersect);
+
+    List<User> getVerifiedWithPhoneNumber(Set<String> intersect);
+
+    User save(User user, InputStream uploadedInputStream);
+
+    List<User> findVerifiedWithQuery(String text, Integer from, Integer count);
 }

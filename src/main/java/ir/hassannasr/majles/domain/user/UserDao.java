@@ -17,4 +17,8 @@ public interface UserDao extends GenericDao<User, Long> {
     public Endorse loadEndorseByUserCandidContext(User user, Candid c, String context);
 
     public List<User> getWithPhoneNumber(Set<String> intersect);
+
+    public List<User> getVerifiedWithPhoneNumber(Set<String> intersect);
+
+    List<User> findVerifiedWithQuery(String text, Integer from, Integer count);
 }

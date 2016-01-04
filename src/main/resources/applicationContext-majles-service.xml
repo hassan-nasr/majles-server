@@ -43,6 +43,10 @@
         <constructor-arg ref="userDao"/>
         <property name="BASE_ENDORSE_CREDIT" value="10"/>
     </bean>
+    <bean id="postManager" class="ir.hassannasr.majles.domain.post.PostManagerImpl">
+        <constructor-arg ref="postDao"/>
+        <property name="postImageLocation" value="D:/Projects/Majles/server/images/" />
+    </bean>
 
 
     <bean id="applicationServiceManager" class="com.idehgostar.makhsan.core.services.ApplicationServiceManagerImpl">

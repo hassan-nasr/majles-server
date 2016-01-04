@@ -37,4 +37,19 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
     public List<User> getWithPhoneNumber(Set<String> intersect) {
         return (List<User>) getEntityManager().createNamedQuery("loadUsersWithPhone").setParameter("phone", intersect).getResultList();
     }
+
+    @Override
+    public List<User> getVerifiedWithPhoneNumber(Set<String> intersect) {
+        return (List<User>) getEntityManager().createNamedQuery("loadValidUsersWithPhone").setParameter("phone", intersect).getResultList();
+    }
+
+    @Override
+    public List<User> findVerifiedWithQuery(String text, Integer from, Integer count) {
+        text = "%" + text + "%";
+        return entityManager.createNamedQuery("findVerifiedWithQuery")
+                .setParameter("query", text)
+                .setFirstResult(from)
+                .setMaxResults(count)
+                .getResultList();
+    }
 }

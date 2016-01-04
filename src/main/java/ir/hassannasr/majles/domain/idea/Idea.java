@@ -1,4 +1,4 @@
-package ir.hassannasr.majles.domain.idea.Idea;
+package ir.hassannasr.majles.domain.idea;
 
 import ir.hassannasr.majles.domain.base.BaseObject;
 import ir.hassannasr.majles.domain.candid.Candid;

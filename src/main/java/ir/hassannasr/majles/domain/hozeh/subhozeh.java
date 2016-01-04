@@ -1,6 +1,7 @@
 package ir.hassannasr.majles.domain.hozeh;
 
 import ir.hassannasr.majles.domain.base.BaseObject;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ public class SubHozeh extends BaseObject {
     String hozeh;
     String name;
     Integer capacity;
+    private Long price = 0L;
 
     public Integer getCapacity() {
         return capacity;
@@ -76,5 +78,15 @@ public class SubHozeh extends BaseObject {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @JsonIgnore
+    @com.fasterxml.jackson.annotation.JsonIgnore
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }

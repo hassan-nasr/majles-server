@@ -29,6 +29,7 @@ public class UserView {
     private List<CandidSimpleView> myChoseCandids = new ArrayList<>();
     private List<CandidSimpleView> myFollowingCandids = new ArrayList<>();
     private List<EndorseView> endorseList = new ArrayList<>();
+    private Long verifiedCredit;
 
     public UserView(User user, CandidManager candidManager, boolean showPrivate) {
         id = user.getId();
@@ -54,11 +55,19 @@ public class UserView {
                 if (endorse.getCredit() > 0)
                     endorseList.add(new EndorseView(endorse, candidManager.getCached(endorse.getCandidId())));
             }
-
+            verifiedCredit = user.getVerifiedCredit();
         }
     }
 
     public UserView() {
+    }
+
+    public Long getVerifiedCredit() {
+        return verifiedCredit;
+    }
+
+    public void setVerifiedCredit(Long verifiedCredit) {
+        this.verifiedCredit = verifiedCredit;
     }
 
     public String getImageId() {

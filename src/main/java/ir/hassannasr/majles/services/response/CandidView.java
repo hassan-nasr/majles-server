@@ -5,7 +5,7 @@ import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.Degree;
 import ir.hassannasr.majles.domain.candid.DorehHistoryEntity;
 import ir.hassannasr.majles.domain.candid.EndorseCount;
-import ir.hassannasr.majles.domain.idea.Idea.Idea;
+import ir.hassannasr.majles.domain.idea.Idea;
 import ir.hassannasr.majles.domain.priority.PriorityItem;
 
 import javax.persistence.*;

@@ -2,12 +2,15 @@ package ir.hassannasr.majles.domain.user;
 
 import core.dao.GenericDao;
 import core.service.GenericManagerImpl;
+import ir.hassannasr.majles.domain.ImageManager;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidDao;
 import ir.hassannasr.majles.domain.exceptoin.InvalidParameterException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Query;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -82,6 +85,26 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     @Override
     public List<User> getWithPhoneNumber(Set<String> intersect) {
         return userDao.getWithPhoneNumber(intersect);
+    }
+
+    @Override
+    public List<User> getVerifiedWithPhoneNumber(Set<String> intersect) {
+        return userDao.getVerifiedWithPhoneNumber(intersect);
+    }
+
+    @Override
+    public User save(User user, InputStream uploadedInputStream) {
+        if (uploadedInputStream != null) {
+            final String imageId = RandomStringUtils.random(20, false, true);
+            user.setImageId(imageId);
+            ImageManager.writeToFile(uploadedInputStream, imageId);
+        }
+        return save(user);
+    }
+
+    @Override
+    public List<User> findVerifiedWithQuery(String text, Integer from, Integer count) {
+        return userDao.findVerifiedWithQuery(text, from, count);
     }
 
     private boolean increaseEndorseWithQuery(Candid c, String context, Integer credit) {

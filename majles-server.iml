@@ -228,6 +228,15 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.sun.grizzly:grizzly-http-servlet-deployer:1.9.64" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.springframework:spring-test:4.2.0.RELEASE" level="project" />
     <orderEntry type="module-library" exported="">
+      <library name="Gradle: com.idehgostar:makhsan-auth:1.2-SNAPSHOT">
+        <CLASSES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.2-SNAPSHOT/2f02b92e5134b3a3b51cb5759749935a099442e3/makhsan-auth-1.2-SNAPSHOT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
       <library name="Gradle: com.github.jai-imageio:jai-imageio-core:1.3.1">
         <CLASSES>
           <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.github.jai-imageio/jai-imageio-core/1.3.1/300f3f0dedfca37b3278991f9397354971b37156/jai-imageio-core-1.3.1.jar!/" />
@@ -246,6 +255,17 @@
         <JAVADOC />
         <SOURCES>
           <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.github.jai-imageio/jai-imageio-jpeg2000/1.3.0/94fd72266373a48d36aa809b20d64aa0bf860a28/jai-imageio-jpeg2000-1.3.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="Gradle: com.sun.jersey.contribs:jersey-multipart:1.19">
+        <CLASSES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.sun.jersey.contribs/jersey-multipart/1.19/d94f3da447200adf1422de7fed2ca3c544eb2714/jersey-multipart-1.19.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.sun.jersey.contribs/jersey-multipart/1.19/cd12a0254457bc6784cb721b92ee5287c4344863/jersey-multipart-1.19-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -635,6 +655,17 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
+      <library name="Gradle: org.jvnet.mimepull:mimepull:1.9.3">
+        <CLASSES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.jvnet.mimepull/mimepull/1.9.3/c55096ff89a27e22c2e081371d0570ac19cc6788/mimepull-1.9.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.jvnet.mimepull/mimepull/1.9.3/8abb9e0b24317725c51ac905d1face261054fceb/mimepull-1.9.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
       <library name="Gradle: org.springframework:spring-webmvc:4.0.9.RELEASE">
         <CLASSES>
           <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/4.0.9.RELEASE/44122b1e0e833a22a9476db84649fbee28ba588f/spring-webmvc-4.0.9.RELEASE.jar!/" />
@@ -773,24 +804,6 @@
         <SOURCES>
           <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/org.jboss/jandex/1.1.0.Final/cd042b769b296fd1bc20ca5120824caa42b6c9ed/jandex-1.1.0.Final-sources.jar!/" />
         </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="TEST">
-      <library name="Gradle: com.idehgostar:makhsan-auth:1.2-SNAPSHOT">
-        <CLASSES>
-          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.2-SNAPSHOT/2f02b92e5134b3a3b51cb5759749935a099442e3/makhsan-auth-1.2-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Gradle: com.idehgostar:makhsan-auth:1.2-SNAPSHOT">
-        <CLASSES>
-          <root url="jar://D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.2-SNAPSHOT/2f02b92e5134b3a3b51cb5759749935a099442e3/makhsan-auth-1.2-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library" scope="TEST">

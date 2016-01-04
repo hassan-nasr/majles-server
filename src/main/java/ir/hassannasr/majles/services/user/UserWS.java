@@ -2,6 +2,7 @@ package ir.hassannasr.majles.services.user;
 
 import com.idehgostar.makhsan.core.auth.TokenManager;
 import com.idehgostar.makhsan.core.services.ApplicationServiceManager;
+import com.sun.jersey.multipart.FormDataParam;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidManager;
 import ir.hassannasr.majles.domain.candid.HozehDao;
@@ -13,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 /**
@@ -59,8 +62,10 @@ public class UserWS extends BaseWS {
             } else {
                 try {
                     User requestedUser = userManager.get(userId);
+                    if (requestedUser.getVerified())
+                        return Response.ok(new UserView(requestedUser, candidManager, false)).build();
                     User userInSite = userManager.get(Long.valueOf(getUserInSite()));
-                    if (phoneConnectionDao.isConnectionExist(requestedUser.getPhone(), userInSite.getPhone())) {
+                    if (phoneConnectionDao.getConnection(requestedUser.getPhone(), userInSite.getPhone()) != null) {
                         return Response.ok(new UserView(requestedUser, candidManager, false)).build();
                     }
                 } catch (Exception e) {
@@ -216,23 +221,7 @@ public class UserWS extends BaseWS {
         if (getUserInSite() == null)
             return sendError("NotLoggedIn");
         final User user = userManager.get(Long.valueOf(getUserInSite()));
-        final Map<String, PhoneConnection> toConnections = phoneConnectionDao.getConnectionsTo(user.getPhone());
-        final Map<String, PhoneConnection> fromConnectins = phoneConnectionDao.getConnectionsFrom(user.getPhone());
-        Set<String> s1 = toConnections.keySet();
-        Set<String> s2 = fromConnectins.keySet();
-        if (s1.size() > s2.size()) {
-            Set<String> temp = s1;
-            s1 = s2;
-            s2 = temp;
-        }
-        Set<String> intersect = new HashSet<>();
-        for (String s : s1) {
-            if (s2.contains(s))
-                intersect.add(s);
-        }
-
-        List<UserSimpleView> userSimpleViewList = new ArrayList<>();
-        List<User> users = userManager.getWithPhoneNumber(intersect);
+        Set<User> users = phoneConnectionDao.getMyConnections(user);
         List<UserSimpleView> ret = new ArrayList<>();
         for (User user1 : users) {
             ret.add(new UserSimpleView(user1));
@@ -240,6 +229,64 @@ public class UserWS extends BaseWS {
         return Response.ok(ret).build();
     }
 
+    @GET
+    @Path("/search")
+    @Produces("application/json")
+    public Response getChannels(@QueryParam("query") String text,
+                                @QueryParam("from") @DefaultValue("0") Integer from,
+                                @QueryParam("count") @DefaultValue("1000") Integer count) throws IOException {
+        if (getUserInSite() == null)
+            return sendError("NotLoggedIn");
+        if (text == null)
+            text = "";
+        final List<User> result = userManager.findVerifiedWithQuery(text, from, count);
+        List<UserSimpleView> ret = new ArrayList<>();
+        for (User user : result) {
+            ret.add(new UserSimpleView(user));
+        }
+        return Response.ok(ret).build();
+    }
+
+
+    @POST
+    @Path("/uploadInfo")
+    @Produces("application/json")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response publish(@QueryParam("name") String text,
+                            @FormDataParam("picture") InputStream uploadedInputStream
+    ) throws IOException {
+        if (getUserInSite() == null)
+            return sendError("NotLoggedIn");
+        User user = userManager.get(Long.valueOf(getUserInSite()));
+        if (user == null)
+            return sendError("NotLoggedIn");
+        user.setName(text);
+        user = userManager.save(user, uploadedInputStream);
+        return Response.ok(new UserView(user, candidManager, true)).build();
+    }
+
+
+    @GET
+    @Path("/alterFriend")
+    @Produces("application/json")
+    public Response alterFriend(@QueryParam("phone") String phone, @QueryParam("add") Boolean add) throws IOException {
+        if (getUserInSite() == null)
+            return sendError("NotLoggedIn");
+        User user = userManager.get(Long.valueOf(getUserInSite()));
+        if (user == null)
+            return sendError("NotLoggedIn");
+        Set<String> friend = new HashSet<>();
+        friend.add(phone);
+        final List<User> withPhoneNumber = userManager.getWithPhoneNumber(friend);
+
+        if (withPhoneNumber.size() == 0 || !withPhoneNumber.get(0).getVerified())
+            return sendError("NotAllowed");
+        if (add)
+            phoneConnectionDao.addFriend(user, phone);
+        else
+            phoneConnectionDao.removeFriend(user, phone);
+        return sendSuccess("Done");
+    }
 
 
     public UserManager getUserManager() {

@@ -10,12 +10,22 @@ public class UserSimpleView {
     String phone;
     String imageId;
     Long subHozehId;
+    String name;
 
     public UserSimpleView(User user) {
         this.id = user.getId();
         this.phone = user.getPhone();
         imageId = user.getImageId();
         subHozehId = user.getSubHozeh().getId();
+        name = user.getName();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getSubHozehId() {

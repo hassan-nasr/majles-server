@@ -186,6 +186,7 @@
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/com.idehgostar/makhsan-auth/1.2-SNAPSHOT/2f02b92e5134b3a3b51cb5759749935a099442e3/makhsan-auth-1.2-SNAPSHOT.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/com.github.jai-imageio/jai-imageio-core/1.3.1/300f3f0dedfca37b3278991f9397354971b37156/jai-imageio-core-1.3.1.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/com.github.jai-imageio/jai-imageio-jpeg2000/1.3.0/94cba6faa03d2a279d00b284b76231ae2f2f67e8/jai-imageio-jpeg2000-1.3.0.jar" />
+          <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/com.sun.jersey.contribs/jersey-multipart/1.19/d94f3da447200adf1422de7fed2ca3c544eb2714/jersey-multipart-1.19.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.8.3/65fd012581ded67bc20945d85c32b4598c3a9cf1/jsoup-1.8.3.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jms/3.2.5.RELEASE/ef1bcf12d7fc08dc09f7c7c72c3aa07f9fec6408/spring-jms-3.2.5.RELEASE.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-oxm/3.2.5.RELEASE/cd2bb206443f02d99773e96c943fa740c8976143/spring-oxm-3.2.5.RELEASE.jar" />
@@ -221,6 +222,7 @@
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.htrace/htrace-core/3.0.4/d7461828faf28411f37f8570d896292db277d838/htrace-core-3.0.4.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/4.1/ad568238ee36a820bd6c6806807e8a14ea34684d/asm-4.1.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/4.1/f8b86f4ee6e02082f63a658e00eb5506821253c6/asm-commons-4.1.jar" />
+          <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.jvnet.mimepull/mimepull/1.9.3/c55096ff89a27e22c2e081371d0570ac19cc6788/mimepull-1.9.3.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/4.0.9.RELEASE/44122b1e0e833a22a9476db84649fbee28ba588f/spring-webmvc-4.0.9.RELEASE.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.javassist/javassist/3.20.0-GA/a9cbcdfb7e9f86fbc74d3afae65f2248bfbf82a0/javassist-3.20.0-GA.jar" />
           <element id="file-copy" path="D:/Devel/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.1/87c0ea803b69252868d09308b4618f766f135a96/objenesis-2.1.jar" />

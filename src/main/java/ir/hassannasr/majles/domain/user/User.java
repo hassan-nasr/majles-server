@@ -14,22 +14,33 @@ import java.util.*;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "loadUsersWithPhone", query = "from User u where u.phone in :phone")
+        @NamedQuery(name = "loadUsersWithPhone", query = "from ir.hassannasr.majles.domain.user.User u where u.phone in :phone"),
+        @NamedQuery(name = "loadValidUsersWithPhone", query = "from ir.hassannasr.majles.domain.user.User u where u.phone in :phone and u.verified=true"),
+        @NamedQuery(name = "findVerifiedWithQuery", query = "from ir.hassannasr.majles.domain.user.User u where u.verified=true and u.name like :query")
 })
 public class User extends BaseObject {
     private Long id;
     private Date creationDate;
     private Long endorseCredit;
     private SubHozeh subHozeh;
-    private Boolean verified;
+    private Boolean verified = false;
     private String name;
     private String imageId;
     private String phone;
     private Set<Candid> myChoseCandids = new HashSet<>();
     private Set<Candid> myFollowingCandids = new HashSet<>();
     private List<Endorse> endorseList = new ArrayList<>();
+    private Long verifiedCredit;
 
     public User() {
+    }
+
+    public Long getVerifiedCredit() {
+        return verifiedCredit;
+    }
+
+    public void setVerifiedCredit(Long verifiedCredit) {
+        this.verifiedCredit = verifiedCredit;
     }
 
     public String getImageId() {

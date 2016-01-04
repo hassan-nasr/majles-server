@@ -10,13 +10,14 @@
         <class>ir.hassannasr.majles.domain.init.FillerVersion</class>
         <class>ir.hassannasr.majles.domain.candid.Candid</class>
         <class>com.idehgostar.makhsan.core.services.ApplicationService</class>
-        <class>ir.hassannasr.majles.domain.idea.Idea.Idea</class>
+        <class>ir.hassannasr.majles.domain.idea.Idea</class>
         <class>ir.hassannasr.majles.domain.priority.PriorityItem</class>
         <class>ir.hassannasr.majles.domain.priority.PriorityType</class>
         <class>ir.hassannasr.majles.domain.candid.DorehHistoryEntity</class>
         <class>ir.hassannasr.majles.domain.candid.EndorseCount</class>
         <class>ir.hassannasr.majles.domain.user.User</class>
         <class>ir.hassannasr.majles.domain.hozeh.SubHozeh</class>
+        <class>ir.hassannasr.majles.domain.post.Post</class>
 
 
 

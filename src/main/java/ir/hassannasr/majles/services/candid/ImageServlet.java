@@ -1,5 +1,7 @@
 package ir.hassannasr.majles.services.candid;
 
+import org.apache.commons.io.FileUtils;
+
 import javax.imageio.ImageIO;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -33,12 +35,25 @@ public class ImageServlet extends HttpServlet {
             return;
         }
 
+        newMethod(resp, file);
+
+    }
+
+    private void newMethod(HttpServletResponse resp, File file) throws IOException {
+        //Find a suitable ImageReader
+
+        resp.setContentType("image/jpeg");
+        OutputStream out = resp.getOutputStream();
+        FileUtils.copyFile(file, out);
+        out.close();
+    }
+
+    private void oldMethod(HttpServletResponse resp, File file) throws IOException {
         resp.setContentType("image/png");
         BufferedImage bi = ImageIO.read(file);
         OutputStream out = resp.getOutputStream();
         ImageIO.write(bi, "png", out);
         out.close();
-
     }
 
     public void init(ServletConfig config) throws ServletException {

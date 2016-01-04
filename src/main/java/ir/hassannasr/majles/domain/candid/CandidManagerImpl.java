@@ -7,10 +7,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hassan on 02/11/2015.
@@ -42,5 +39,18 @@ public class CandidManagerImpl extends GenericManagerImpl<Candid, Long> implemen
         if (ret.getRight() != null)
             cache.put(candidId, ret);
         return ret.getRight();
+    }
+
+    @Override
+    public Map<Long, Long> getPriceMap() {
+        Map<Long, Long> ret = new TreeMap<>();
+        final List<SubHozeh> allHozeh = getAllHozeh();
+        Long totalPrice = 0L;
+        for (SubHozeh hozeh : allHozeh) {
+            totalPrice += hozeh.getPrice();
+            ret.put(hozeh.getId(), hozeh.getPrice());
+        }
+        ret.put(0L, totalPrice);
+        return ret;
     }
 }
