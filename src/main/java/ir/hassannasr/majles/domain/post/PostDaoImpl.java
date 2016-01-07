@@ -4,6 +4,7 @@ import core.dao.GenericDaoImpl;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,8 @@ public class PostDaoImpl extends GenericDaoImpl<Post, Long> implements PostDao {
 
     @Override
     public List<Post> loadPostByUserIds(List<Long> userIds, Long older, Long newer, Integer count) {
+        if(userIds.size()==0)
+            return new ArrayList<>();
         return entityManager.createNamedQuery("loadPostByUsers")
                 .setParameter("userIds", userIds)
                 .setParameter("older", older == null ? Long.MAX_VALUE : older)

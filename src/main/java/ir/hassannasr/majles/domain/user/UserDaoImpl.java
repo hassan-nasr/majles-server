@@ -5,6 +5,7 @@ import ir.hassannasr.majles.domain.candid.Candid;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -35,11 +36,15 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
 
     @Override
     public List<User> getWithPhoneNumber(Set<String> intersect) {
+        if(intersect.size()==0)
+            return new ArrayList<>();
         return (List<User>) getEntityManager().createNamedQuery("loadUsersWithPhone").setParameter("phone", intersect).getResultList();
     }
 
     @Override
     public List<User> getVerifiedWithPhoneNumber(Set<String> intersect) {
+        if(intersect.size()==0)
+            return new ArrayList<>();
         return (List<User>) getEntityManager().createNamedQuery("loadValidUsersWithPhone").setParameter("phone", intersect).getResultList();
     }
 

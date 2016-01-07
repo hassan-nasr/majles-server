@@ -131,6 +131,8 @@ public class User extends BaseObject {
     }
 
     public Boolean getVerified() {
+        if (verified == null)
+            verified = false;
         return verified;
     }
 

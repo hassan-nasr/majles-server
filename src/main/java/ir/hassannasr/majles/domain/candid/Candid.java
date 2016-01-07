@@ -13,6 +13,9 @@ import java.util.List;
  * Created by hassan on 07/12/2015.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "findCandidWithUserIds", query = "from Candid c where c.userId in :userIds"),
+})
 public class Candid extends BaseObject {
     Long id;
     String name;
@@ -27,6 +30,8 @@ public class Candid extends BaseObject {
     String imageId;
     String resume;
     String rss;
+    String code;
+    Long userId;
 
     EndorseCount endorseCount;
     List<PriorityItem> priorityItems;
@@ -38,6 +43,22 @@ public class Candid extends BaseObject {
     private String languages;
     private SubHozeh subHozehObj;
     private List<DorehHistoryEntity> dorehHistoryEntities = new ArrayList<>();
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     @ManyToOne
     public SubHozeh getSubHozehObj() {

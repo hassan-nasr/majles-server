@@ -13,16 +13,20 @@ public class CandidSimpleView {
     String hozeh;
     String subHozeh;
     String imageId;
+    Long userId;
+    String code;
 
     public CandidSimpleView() {
     }
 
-    public CandidSimpleView(Long id, String hozeh, String subHozeh, String imageId, List<String> name) {
+    public CandidSimpleView(Long id, String hozeh, String subHozeh, String imageId, List<String> name, String code, Long userId) {
         this.hozeh = hozeh;
         this.id = id;
         this.imageId = imageId;
         this.name = name.get(0);
         this.subHozeh = subHozeh;
+        this.code = code;
+        this.userId = userId;
     }
 
     public CandidSimpleView(Candid candid) {
@@ -31,6 +35,24 @@ public class CandidSimpleView {
         this.imageId = candid.getImageId();
         this.name = candid.getName();
         this.subHozeh = candid.getSubHozeh();
+        userId = candid.getUserId();
+        code = candid.getCode();
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getId() {

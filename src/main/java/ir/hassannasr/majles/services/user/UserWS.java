@@ -69,6 +69,7 @@ public class UserWS extends BaseWS {
                         return Response.ok(new UserView(requestedUser, candidManager, false)).build();
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 return sendError("خطای دسترسی");
             }
@@ -224,7 +225,7 @@ public class UserWS extends BaseWS {
         Set<User> users = phoneConnectionDao.getMyConnections(user);
         List<UserSimpleView> ret = new ArrayList<>();
         for (User user1 : users) {
-            ret.add(new UserSimpleView(user1));
+            ret.add(new UserSimpleView(user1, null));
         }
         return Response.ok(ret).build();
     }
@@ -240,9 +241,10 @@ public class UserWS extends BaseWS {
         if (text == null)
             text = "";
         final List<User> result = userManager.findVerifiedWithQuery(text, from, count);
+        final Map<Long, Candid> candidsMap = candidManager.getCandidsMap(result);
         List<UserSimpleView> ret = new ArrayList<>();
         for (User user : result) {
-            ret.add(new UserSimpleView(user));
+            ret.add(new UserSimpleView(user, candidsMap.get(user.getId())));
         }
         return Response.ok(ret).build();
     }

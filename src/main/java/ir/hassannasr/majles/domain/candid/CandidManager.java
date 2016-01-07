@@ -2,7 +2,9 @@ package ir.hassannasr.majles.domain.candid;
 
 import core.service.GenericManager;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
+import ir.hassannasr.majles.domain.user.User;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -16,4 +18,6 @@ public interface CandidManager extends GenericManager<Candid, Long> {
     Candid getCached(Long candidId);
 
     Map<Long, Long> getPriceMap();
+
+    Map<Long, Candid> getCandidsMap(Collection<User> result);
 }

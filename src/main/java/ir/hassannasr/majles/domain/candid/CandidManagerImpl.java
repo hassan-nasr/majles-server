@@ -3,11 +3,13 @@ package ir.hassannasr.majles.domain.candid;
 import core.dao.GenericDao;
 import core.service.GenericManagerImpl;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
+import ir.hassannasr.majles.domain.user.User;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by hassan on 02/11/2015.
@@ -53,4 +55,20 @@ public class CandidManagerImpl extends GenericManagerImpl<Candid, Long> implemen
         ret.put(0L, totalPrice);
         return ret;
     }
+
+    @Override
+    public Map<Long, Candid> getCandidsMap(Collection<User> result) {
+        if (result == null || result.size() == 0)
+            return new HashMap<>();
+        List<Long> userIds = result.stream().map(User::getId).collect(Collectors.toList());
+        if (userIds.size() == 0)
+            return new HashMap<>();
+        List<Candid> candids = candidDao.findCandidWithUserIds(userIds);
+        Map<Long, Candid> candidMap = new HashMap<>();
+        for (Candid candid : candids) {
+            candidMap.put(candid.getUserId(), candid);
+        }
+        return candidMap;
+    }
+
 }

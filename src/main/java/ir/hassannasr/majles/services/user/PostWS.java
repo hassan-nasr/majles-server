@@ -1,6 +1,7 @@
 package ir.hassannasr.majles.services.user;
 
 import com.sun.jersey.multipart.FormDataParam;
+import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidManager;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 import ir.hassannasr.majles.domain.post.Post;
@@ -18,10 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -79,7 +77,8 @@ public class PostWS extends BaseWS {
 //            uploadedInputStream = null;
 //        }
         post = postManager.save(post, uploadedInputStream, price);
-        return Response.ok(new PostView(post)).build();
+        final Candid candid = candidManager.getCandidsMap(Arrays.asList(post.getUser())).get(post.getUser().getId());
+        return Response.ok(new PostView(post, candid)).build();
     }
 
 
@@ -96,8 +95,18 @@ public class PostWS extends BaseWS {
         final User user = userManager.get(Long.valueOf(getUserInSite()));
         List<Long> userIds;
         if (friendId == null) {
+
+            Set<Candid> interestedCandids = new HashSet<>();
+            if (user.getMyFollowingCandids() != null)
+                interestedCandids.addAll(user.getMyFollowingCandids());
+            if (user.getMyChoseCandids() != null)
+                interestedCandids.addAll(user.getMyChoseCandids());
             Set<User> users = phoneConnectionDao.getMyConnections(user);
             userIds = users.stream().map(User::getId).collect(Collectors.toList());
+            for (Candid interestedCandid : interestedCandids) {
+                if (interestedCandid.getUserId() != null)
+                    userIds.add(interestedCandid.getUserId());
+            }
         } else {
             userIds = new ArrayList<>();
             User friend = userManager.get(friendId);
@@ -107,7 +116,19 @@ public class PostWS extends BaseWS {
                 return sendError("شما دسترسی به اخبار این کاربر ندارید");
         }
         final List<Post> result = postManager.loadPostByUserIds(userIds, older, newer, count);
-        List<PostView> postViews = result.stream().map(PostView::new).collect(Collectors.toList());
+        return createPostViewList(result);
+    }
+
+    protected Response createPostViewList(List<Post> result) {
+        Set<User> users = new HashSet<>();
+        for (Post post : result) {
+            users.add(post.getUser());
+        }
+        Map<Long, Candid> candids = candidManager.getCandidsMap(users);
+        List<PostView> postViews = new ArrayList<>();
+        for (Post post : result) {
+            postViews.add(new PostView(post, candids.get(post.getUser().getId())));
+        }
         return Response.ok(postViews).build();
     }
 
@@ -123,11 +144,7 @@ public class PostWS extends BaseWS {
             return sendError("NotLoggedIn");
 
         final List<Post> result = postManager.loadMyPost(Long.valueOf(getUserInSite()), older, newer, count);
-        List<PostView> postViews = new ArrayList<>();
-        for (Post post : result) {
-            postViews.add(new PostView(post));
-        }
-        return Response.ok(postViews).build();
+        return createPostViewList(result);
     }
 
     @GET
@@ -141,11 +158,7 @@ public class PostWS extends BaseWS {
         final User user = userManager.get(Long.valueOf(getUserInSite()));
         SubHozeh hozeh = user.getSubHozeh();
         final List<Post> result = postManager.loadSponsoredPosts(hozeh, older, newer, count);
-        List<PostView> postViews = new ArrayList<>();
-        for (Post post : result) {
-            postViews.add(new PostView(post));
-        }
-        return Response.ok(postViews).build();
+        return createPostViewList(result);
 
     }
 

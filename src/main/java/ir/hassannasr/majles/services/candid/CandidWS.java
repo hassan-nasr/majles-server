@@ -50,9 +50,9 @@ public class CandidWS extends BaseWS {
         Candid candid = candidManager.get(Long.parseLong(candiId));
         CandidView candidView = new CandidView(candid);
         if (candid.getSupporterIds() == null || candid.getSupporterIds().isEmpty()) {
-            for (int i = 0; i < 10; i++) {
-                candid.getSupporterIds().add(Math.abs(random.nextLong()) % 290 + 1);
-            }
+//            for (int i = 0; i < 10; i++) {
+//                candid.getSupporterIds().add(Math.abs(random.nextLong()) % 290 + 1);
+//            }
         }
 
         for (Long id : candid.getSupporterIds()) {
@@ -73,9 +73,9 @@ public class CandidWS extends BaseWS {
         for (Candid candid : candids) {
             CandidView candidView = new CandidView(candid);
             if (candid.getSupporterIds() == null || candid.getSupporterIds().isEmpty()) {
-                for (int i = 0; i < 10; i++) {
-                    candid.getSupporterIds().add(Math.abs(random.nextLong()) % 290 + 1);
-                }
+//                for (int i = 0; i < 10; i++) {
+//                    candid.getSupporterIds().add(Math.abs(random.nextLong()) % 290 + 1);
+//                }
             }
             for (Long id : candid.getSupporterIds()) {
                 final Candid candid1 = candidManager.get(id);
@@ -103,20 +103,25 @@ public class CandidWS extends BaseWS {
                 from = 0;
             if (count == null)
                 count = 50;
-            QueryElement queryElement = new StringQueryElement("all", query);
+
             final ArrayList<QueryElement> queryElements = new ArrayList<>();
-            queryElements.add(queryElement);
+            for (String s : query.split("\\s+")) {
+                QueryElement queryElement = new StringQueryElement("all", s);
+                queryElements.add(queryElement);
+            }
             final HashSet<String> otherFields = new HashSet<>();
             otherFields.add("name");
             otherFields.add("hozeh");
             otherFields.add("subhozeh");
             otherFields.add("imageId");
+            otherFields.add("code");
+            otherFields.add("userId");
             final QueryResult<GroupResultElement> result = new SolrFacadeImpl(solrClient).search(queryElements, from, count, new HighlightOptions(), "id", 1, otherFields);
             CandidSearchResult ret = new CandidSearchResult();
             ret.setCount(result.getCount());
             for (GroupResultElement groupResultElement : result.getResultList()) {
                 final SolrDocument solrDoc = ((ResultElement) groupResultElement.getResultElements().get(0)).getSolrDoc();
-                ret.getResult().add(new CandidSimpleView((Long) solrDoc.get("id"), (String) solrDoc.get("hozeh"), (String) solrDoc.get("subhozeh"), (String) solrDoc.get("imageId"), (List<String>) solrDoc.get("name")));
+                ret.getResult().add(new CandidSimpleView((Long) solrDoc.get("id"), (String) solrDoc.get("hozeh"), (String) solrDoc.get("subhozeh"), (String) solrDoc.get("imageId"), (List<String>) solrDoc.get("name"),(String) solrDoc.get("code"),(Long)solrDoc.get("userId")));
             }
             return Response.ok(getJsonCreator().getJson(ret)).build();
 

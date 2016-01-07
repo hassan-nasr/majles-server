@@ -30,6 +30,9 @@ public class CandidView extends BaseObject {
     String imageId;
     String resume;
     String rss;
+
+    String code;
+    Long userId;
     List<PriorityItem> priorityItems;
     List<Idea> ideas;
     List<CandidSimpleView> supporters = new ArrayList<>();
@@ -39,7 +42,6 @@ public class CandidView extends BaseObject {
     private String website;
     private String languages;
     private List<DorehHistoryEntity> dorehHistoryEntities = new ArrayList<>();
-
     public CandidView(Candid candid) {
         this.id = candid.getId();
         this.name = candid.getName();
@@ -61,6 +63,8 @@ public class CandidView extends BaseObject {
         this.website = candid.getWebsite();
         this.languages = candid.getLanguages();
         this.dorehHistoryEntities = candid.getDorehHistoryEntities();
+        userId=candid.getUserId();
+        code=candid.getCode();
         for (DorehHistoryEntity dorehHistoryEntity : this.dorehHistoryEntities) {
             dorehHistoryEntity.setLegalDrafts("");
         }
@@ -75,6 +79,22 @@ public class CandidView extends BaseObject {
             e.printStackTrace();
         }
 
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public List<CandidEndorse> getEndorseList() {

@@ -1,5 +1,6 @@
 package ir.hassannasr.majles.services.response;
 
+import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.post.Post;
 
 import java.util.Date;
@@ -20,11 +21,11 @@ public class PostView {
     Long subHozehId;
     Boolean sponsored = false;
 
-    public PostView(Post post) {
+    public PostView(Post post, Candid candid) {
         deleted = post.getDeleted();
         id = post.getId();
         publishDate = post.getPublishDate();
-        user = new UserSimpleView(post.getUser());
+        user = new UserSimpleView(post.getUser(), candid);
         text = post.getText();
         imageId = post.getImageId();
         link = post.getLink();
