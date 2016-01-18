@@ -37,11 +37,19 @@ public class CandidView extends BaseObject {
     List<Idea> ideas;
     List<CandidSimpleView> supporters = new ArrayList<>();
     List<CandidEndorse> endorseList = new ArrayList<>();
+    List<UserSimpleView> supportedUsers = new ArrayList<>();
+    List<String> imageAlbumIds;
+    String program;
+    String slogan;
+    String contactInfo;
     private String subHozeh;
     private String bio;
     private String website;
     private String languages;
     private List<DorehHistoryEntity> dorehHistoryEntities = new ArrayList<>();
+    private Boolean isMajles = true;
+    private Boolean isCandid = true;
+
     public CandidView(Candid candid) {
         this.id = candid.getId();
         this.name = candid.getName();
@@ -63,8 +71,14 @@ public class CandidView extends BaseObject {
         this.website = candid.getWebsite();
         this.languages = candid.getLanguages();
         this.dorehHistoryEntities = candid.getDorehHistoryEntities();
-        userId=candid.getUserId();
-        code=candid.getCode();
+        this.isCandid = candid.getCandid();
+        this.isMajles = candid.getMajles();
+        this.userId = candid.getUserId();
+        this.code = candid.getCode();
+        this.imageAlbumIds = candid.getImageAlbumIds();
+        this.program = candid.getProgram();
+        this.slogan = candid.getSlogan();
+        this.contactInfo = candid.getContactInfo();
         for (DorehHistoryEntity dorehHistoryEntity : this.dorehHistoryEntities) {
             dorehHistoryEntity.setLegalDrafts("");
         }
@@ -79,6 +93,62 @@ public class CandidView extends BaseObject {
             e.printStackTrace();
         }
 
+    }
+
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    public List<String> getImageAlbumIds() {
+        return imageAlbumIds;
+    }
+
+    public void setImageAlbumIds(List<String> imageAlbumIds) {
+        this.imageAlbumIds = imageAlbumIds;
+    }
+
+    public String getProgram() {
+        return program;
+    }
+
+    public void setProgram(String program) {
+        this.program = program;
+    }
+
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
+
+    public Boolean getCandid() {
+        return isCandid;
+    }
+
+    public void setCandid(Boolean candid) {
+        isCandid = candid;
+    }
+
+    public Boolean getMajles() {
+        return isMajles;
+    }
+
+    public void setMajles(Boolean majles) {
+        isMajles = majles;
+    }
+
+    public List<UserSimpleView> getSupportedUsers() {
+        return supportedUsers;
+    }
+
+    public void setSupportedUsers(List<UserSimpleView> supportedUsers) {
+        this.supportedUsers = supportedUsers;
     }
 
     public String getCode() {

@@ -4,11 +4,11 @@ import com.idehgostar.makhsan.core.encryption.CipherUtils;
 import ir.hassannasr.majles.core.solr.*;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidManager;
+import ir.hassannasr.majles.domain.user.PhoneConnectionDao;
+import ir.hassannasr.majles.domain.user.User;
+import ir.hassannasr.majles.domain.user.UserManager;
 import ir.hassannasr.majles.services.BaseWS;
-import ir.hassannasr.majles.services.response.CandidSearchResult;
-import ir.hassannasr.majles.services.response.CandidSimpleView;
-import ir.hassannasr.majles.services.response.CandidView;
-import ir.hassannasr.majles.services.response.SimpleResponse;
+import ir.hassannasr.majles.services.response.*;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.common.SolrDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by hassan on 02/11/2015.
@@ -40,6 +38,12 @@ public class CandidWS extends BaseWS {
     CandidManager candidManager;
     @Autowired
     SolrClient solrClient;
+
+    @Autowired
+    UserManager userManager;
+
+    @Autowired
+    PhoneConnectionDao phoneConnectionDao;
 
     @GET
     @Path("/publicInfo")
@@ -58,6 +62,13 @@ public class CandidWS extends BaseWS {
         for (Long id : candid.getSupporterIds()) {
             final Candid candid1 = candidManager.get(id);
             candidView.getSupporters().add(new CandidSimpleView(candid1));
+        }
+
+        Set<User> friends = phoneConnectionDao.getMyConnections(userManager.get(Long.parseLong(getUserInSite())));
+        List<User> inLists = userManager.getUsersContainingCandidOrFromUsers(candid, friends);
+        for (User inList : inLists) {
+//            TODO handel candids(replace null)
+            candidView.getSupportedUsers().add(new UserSimpleView(inList, null));
         }
         return getJsonCreator().getJson(candidView);
     }
@@ -92,6 +103,7 @@ public class CandidWS extends BaseWS {
     @Path("/search")
     @Produces("application/json")
     public Response search(@QueryParam("query") String query,
+                           @QueryParam("majles") Boolean isMajles,
                            @QueryParam("from") Integer from,
                            @QueryParam("count") Integer count) throws IOException {
         if (getUserInSite() == null)
@@ -108,6 +120,9 @@ public class CandidWS extends BaseWS {
             for (String s : query.split("\\s+")) {
                 QueryElement queryElement = new StringQueryElement("all", s);
                 queryElements.add(queryElement);
+            }
+            if (isMajles != null) {
+                queryElements.add(new QueryElement("majles", isMajles ? "1" : "0"));
             }
             final HashSet<String> otherFields = new HashSet<>();
             otherFields.add("name");
@@ -137,6 +152,29 @@ public class CandidWS extends BaseWS {
     public String getAllHozeh() {
         try {
             return getJsonCreator().getJson(candidManager.getAllHozeh());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GET
+    @Path("/getByDoreh")
+    @Produces("application/json")
+    public Response getByDoreh(@QueryParam("doreh") Integer doreh,
+                               @QueryParam("majles") Boolean isMajles
+    ) {
+        try {
+            if (getUserInSite() == null)
+                return sendError("notLoggedIn");
+
+            if (isMajles == null)
+                isMajles = true;
+            final List<Candid> candids = candidManager.searchByDoreh(doreh, isMajles);
+            CandidSearchResult ret = new CandidSearchResult();
+            ret.setCount(candids.size());
+            ret.setResult(candids.stream().map(CandidSimpleView::new).collect(Collectors.toList()));
+            return Response.ok(ret).build();
         } catch (IOException e) {
             e.printStackTrace();
             return null;

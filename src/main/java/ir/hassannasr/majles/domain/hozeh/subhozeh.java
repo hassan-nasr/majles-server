@@ -17,7 +17,16 @@ public class SubHozeh extends BaseObject {
     String hozeh;
     String name;
     Integer capacity;
+    Boolean majles;
     private Long price = 0L;
+
+    public Boolean getMajles() {
+        return majles;
+    }
+
+    public void setMajles(Boolean majles) {
+        this.majles = majles;
+    }
 
     public Integer getCapacity() {
         return capacity;

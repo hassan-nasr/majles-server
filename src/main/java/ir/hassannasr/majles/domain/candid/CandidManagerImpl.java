@@ -71,4 +71,47 @@ public class CandidManagerImpl extends GenericManagerImpl<Candid, Long> implemen
         return candidMap;
     }
 
+    @Override
+    public List<Candid> searchByDoreh(Integer doreh, Boolean isMajles) {
+        final String dorehString = getDorehSring(doreh);
+        return candidDao.searchByDoreh(dorehString,isMajles);
+    }
+
+    protected String getDorehSring(Integer doreh) {
+        String dorehString = null;
+        switch (doreh){
+            case 1:
+                dorehString="اول";
+                break;
+            case 2:
+                dorehString="دوم";
+                break;
+            case 3:
+                dorehString="سوم";
+                break;
+            case 4:
+                dorehString="چهارم";
+                break;
+            case 5:
+                dorehString="پنجم";
+                break;
+            case 6:
+                dorehString="ششم";
+                break;
+            case 7:
+                dorehString="هفتم";
+                break;
+            case 8:
+                dorehString="هشتم";
+                break;
+            case 9:
+                dorehString="نهم";
+                break;
+            case 10:
+                dorehString="دهم";
+                break;
+        }
+        return dorehString;
+    }
+
 }

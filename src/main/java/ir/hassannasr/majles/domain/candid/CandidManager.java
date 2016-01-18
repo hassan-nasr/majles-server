@@ -20,4 +20,6 @@ public interface CandidManager extends GenericManager<Candid, Long> {
     Map<Long, Long> getPriceMap();
 
     Map<Long, Candid> getCandidsMap(Collection<User> result);
+
+    List<Candid> searchByDoreh(Integer Doreh, Boolean isMajles);
 }

@@ -8,8 +8,12 @@ import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -24,13 +28,13 @@ public class MemberInfoExtractor {
     public static String saveImageLocation = "./images/";
 
     public static void main(String[] args) throws IOException {
-        Scanner cin = new Scanner(new File("./output/member.txt"));
+        Scanner cin = new Scanner(new File("./namaLink.txt"));
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayList<Member> res = new ArrayList<>();
         int counter = 0;
         while (cin.hasNextLine()) {
             System.out.println("counter = " + counter++);
-            String link = cin.nextLine().split(":")[1].trim();
+            String link = cin.nextLine();//.split(":")[1].trim();
 
             URL url = new URL(baseUrl + link);
 //            url=new URL("http://rc.majlis.ir/fa/parliament_member/show/861887");
@@ -54,11 +58,11 @@ public class MemberInfoExtractor {
                 if (image != null) {
                     String imageUrl = image.attr("src");
                     final String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-//                    try (InputStream in = new URL(baseUrl + imageUrl.replace(" ", "%20")).openStream()) {
-//                        Files.copy(in, Paths.get(saveImageLocation + fileName), StandardCopyOption.REPLACE_EXISTING);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+                    try (InputStream in = new URL(baseUrl + imageUrl.replace(" ", "%20")).openStream()) {
+                        Files.copy(in, Paths.get(saveImageLocation + fileName), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     member.setImageFileName(fileName);
                 }
             }
@@ -147,7 +151,7 @@ public class MemberInfoExtractor {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                System.out.println(objectMapper.writeValueAsString(d));
+//                System.out.println(objectMapper.writeValueAsString(d));
                 member.getDorehHistories().add(d);
                 doreh++;
             }
@@ -159,7 +163,7 @@ public class MemberInfoExtractor {
 //            return;
         final String s = objectMapper.writeValueAsString(res);
         System.out.println(s);
-        PrintStream p = new PrintStream(new File("./output/memberInfo.json"));
+        PrintStream p = new PrintStream(new File("./output/memberInfoAll.json"));
         p.println(s);
         p.close();
     }

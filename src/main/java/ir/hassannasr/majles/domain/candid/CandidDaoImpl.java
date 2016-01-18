@@ -16,4 +16,9 @@ public class CandidDaoImpl extends GenericDaoImpl<Candid, Long> implements Candi
     public List<Candid> findCandidWithUserIds(List<Long> userIds) {
         return entityManager.createNamedQuery("findCandidWithUserIds").setParameter("userIds",userIds).getResultList();
     }
+
+    @Override
+    public List<Candid> searchByDoreh(String dorehString, Boolean isMajles) {
+        return entityManager.createNamedQuery("searchCandidByDoreh").setParameter("doreh","%"+dorehString+"%").setParameter("isMajles",isMajles).getResultList();
+    }
 }

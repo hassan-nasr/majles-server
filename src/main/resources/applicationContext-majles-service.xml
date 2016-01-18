@@ -42,6 +42,7 @@
     <bean id="userManager" class="ir.hassannasr.majles.domain.user.UserManagerImpl">
         <constructor-arg ref="userDao"/>
         <property name="BASE_ENDORSE_CREDIT" value="10"/>
+        <property name="creditPrice" value="1000"/>
     </bean>
     <bean id="postManager" class="ir.hassannasr.majles.domain.post.PostManagerImpl">
         <constructor-arg ref="postDao"/>

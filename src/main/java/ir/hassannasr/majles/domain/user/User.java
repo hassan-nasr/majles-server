@@ -16,7 +16,8 @@ import java.util.*;
 @NamedQueries({
         @NamedQuery(name = "loadUsersWithPhone", query = "from ir.hassannasr.majles.domain.user.User u where u.phone in :phone"),
         @NamedQuery(name = "loadValidUsersWithPhone", query = "from ir.hassannasr.majles.domain.user.User u where u.phone in :phone and u.verified=true"),
-        @NamedQuery(name = "findVerifiedWithQuery", query = "from ir.hassannasr.majles.domain.user.User u where u.verified=true and u.name like :query")
+        @NamedQuery(name = "findVerifiedWithQuery", query = "from ir.hassannasr.majles.domain.user.User u where u.verified=true and u.name like :query"),
+        @NamedQuery(name = "getUsersContainingCandidOrFromUsers", query = "select u from ir.hassannasr.majles.domain.user.User u left join u.myChoseCandids c where c.id = :candidId and ((u.verified=true and c.joined=true) or u.id in (:friends)) order by u.verified desc ")
 })
 public class User extends BaseObject {
     private Long id;
@@ -36,6 +37,8 @@ public class User extends BaseObject {
     }
 
     public Long getVerifiedCredit() {
+        if (verifiedCredit == null)
+            verifiedCredit = 0L;
         return verifiedCredit;
     }
 

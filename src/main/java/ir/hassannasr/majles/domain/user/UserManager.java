@@ -25,4 +25,9 @@ public interface UserManager extends GenericManager<User
     User save(User user, InputStream uploadedInputStream);
 
     List<User> findVerifiedWithQuery(String text, Integer from, Integer count);
+
+    List<User> getUsersContainingCandidOrFromUsers(Candid candid,Set<User> friends);
+
+    public Long getCreditPrice();
+
 }

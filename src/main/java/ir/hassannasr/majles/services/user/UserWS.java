@@ -1,6 +1,8 @@
 package ir.hassannasr.majles.services.user;
 
 import com.idehgostar.makhsan.core.auth.TokenManager;
+import com.idehgostar.makhsan.core.encryption.CipherUtils;
+import com.idehgostar.makhsan.core.services.ApplicationService;
 import com.idehgostar.makhsan.core.services.ApplicationServiceManager;
 import com.sun.jersey.multipart.FormDataParam;
 import ir.hassannasr.majles.domain.candid.Candid;
@@ -10,6 +12,7 @@ import ir.hassannasr.majles.domain.exceptoin.InvalidParameterException;
 import ir.hassannasr.majles.domain.user.*;
 import ir.hassannasr.majles.services.BaseWS;
 import ir.hassannasr.majles.services.response.*;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +45,8 @@ public class UserWS extends BaseWS {
 
     @Autowired
     ApplicationServiceManager applicationServiceManager;
+    @Autowired
+    CipherUtils cipherUtils;
 
     @GET
     @Path("/userInfo")
@@ -288,6 +293,30 @@ public class UserWS extends BaseWS {
         else
             phoneConnectionDao.removeFriend(user, phone);
         return sendSuccess("Done");
+    }
+
+    @GET
+    @Path("/chargeUser")
+    @Produces("application/json")
+    public Response chargeUser(@QueryParam("request") String query) throws IOException {
+        try {
+            final ApplicationService applicationService = applicationServiceManager.loadDefaultService();
+            final String decrypt = cipherUtils.decrypt(query, applicationService.getPrivateKeyExponent().substring(0, 16));
+            ObjectMapper mapper = new ObjectMapper();
+            final ChargeRequest chargeRequest = mapper.readValue(decrypt, ChargeRequest.class);
+            User user = userManager.getWithPhoneNumber(new HashSet<String>(Arrays.asList(chargeRequest.getPhone()))).get(0);
+            if (chargeRequest.getType().equals("AD")) {
+                user.setVerifiedCredit(user.getVerifiedCredit() + chargeRequest.getAmount());
+            } else {
+                user.setEndorseCredit(user.getEndorseCredit() + chargeRequest.getAmount() / userManager.getCreditPrice());
+            }
+            userManager.save(user);
+            userManager.flush();
+            return sendSuccess("Done");
+        }catch (Exception e){
+            e.printStackTrace();
+            return sendError(e.getMessage());
+        }
     }
 
 

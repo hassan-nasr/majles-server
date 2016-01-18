@@ -15,9 +15,11 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "findCandidWithUserIds", query = "from Candid c where c.userId in :userIds"),
+        @NamedQuery(name = "searchCandidByDoreh", query = "select c from Candid c left join c.dorehHistoryEntities e where e.doreh like :doreh and c.majles=:isMajles order by  c.name"),
 })
 public class Candid extends BaseObject {
     Long id;
+    Boolean joined = false;
     String name;
     Integer age;
     String nid;
@@ -32,17 +34,82 @@ public class Candid extends BaseObject {
     String rss;
     String code;
     Long userId;
-
     EndorseCount endorseCount;
     List<PriorityItem> priorityItems;
     List<Idea> ideas;
     List<Long> supporterIds;
+    List<String> imageAlbumIds;
+    String program;
+    String slogan;
+    String contactInfo;
     private String subHozeh;
     private String bio;
     private String website;
     private String languages;
     private SubHozeh subHozehObj;
     private List<DorehHistoryEntity> dorehHistoryEntities = new ArrayList<>();
+    private Boolean isMajles = true;
+    private Boolean isCandid = true;
+
+    @Lob
+    public String getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(String contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    @Lob
+    public String getProgram() {
+        return program;
+    }
+
+    public void setProgram(String program) {
+        this.program = program;
+    }
+
+    @Lob
+    public String getSlogan() {
+        return slogan;
+    }
+
+    public void setSlogan(String slogen) {
+        this.slogan = slogen;
+    }
+
+    @ElementCollection
+    public List<String> getImageAlbumIds() {
+        return imageAlbumIds;
+    }
+
+    public void setImageAlbumIds(List<String> imageAlbumIds) {
+        this.imageAlbumIds = imageAlbumIds;
+    }
+
+    public Boolean getCandid() {
+        return isCandid;
+    }
+
+    public void setCandid(Boolean candid) {
+        isCandid = candid;
+    }
+
+    public Boolean getMajles() {
+        return isMajles;
+    }
+
+    public void setMajles(Boolean majles) {
+        isMajles = majles;
+    }
+
+    public Boolean getJoined() {
+        return joined;
+    }
+
+    public void setJoined(Boolean joined) {
+        this.joined = joined;
+    }
 
     public String getCode() {
         return code;

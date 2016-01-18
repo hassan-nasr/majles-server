@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface CandidDao extends GenericDao<Candid, Long> {
     List<Candid> findCandidWithUserIds(List<Long> userIds);
+    List<Candid> searchByDoreh(String dorehString, Boolean isMajles);
 }
