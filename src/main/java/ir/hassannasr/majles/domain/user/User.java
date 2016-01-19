@@ -15,6 +15,7 @@ import java.util.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "loadUsersWithPhone", query = "from ir.hassannasr.majles.domain.user.User u where u.phone in :phone"),
+        @NamedQuery(name = "increaseReferee", query = "update ir.hassannasr.majles.domain.user.User u set u.endorseCredit=u.endorseCredit+:amount where u.phone=:phone"),
         @NamedQuery(name = "loadValidUsersWithPhone", query = "from ir.hassannasr.majles.domain.user.User u where u.phone in :phone and u.verified=true"),
         @NamedQuery(name = "findVerifiedWithQuery", query = "from ir.hassannasr.majles.domain.user.User u where u.verified=true and u.name like :query"),
         @NamedQuery(name = "getUsersContainingCandidOrFromUsers", query = "select u from ir.hassannasr.majles.domain.user.User u left join u.myChoseCandids c where c.id = :candidId and ((u.verified=true and c.joined=true) or u.id in (:friends)) order by u.verified desc ")

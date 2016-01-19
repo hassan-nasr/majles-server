@@ -51,7 +51,7 @@ public class UserWS extends BaseWS {
     @GET
     @Path("/userInfo")
     @Produces("application/json")
-    public Response getMyInfo(@QueryParam("id") Long userId) {
+    public Response getMyInfo(@QueryParam("id") Long userId, @QueryParam("referee") String refereePhone) {
         try {
             if (getUserInSite() == null)
                 return sendError("NotLoggedIn");
@@ -61,12 +61,17 @@ public class UserWS extends BaseWS {
                     user = userManager.get(userId);
                 } catch (Exception e) {
                 }
-                if (user == null)
-                    user = userManager.createNewUser(userId, getTokenData().getPhone());
+                if (user == null) {
+                    user = userManager.createNewUser(userId, getTokenData().getPhone(), refereePhone);
+                } else if (user.getSubHozeh() == null) {
+                    user.setSubHozeh(hozehDao.get(1l));
+                }
                 return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager, true))).build();
             } else {
                 try {
                     User requestedUser = userManager.get(userId);
+                    if (requestedUser.getSubHozeh() == null)
+                        requestedUser.setSubHozeh(hozehDao.load(1L));
                     if (requestedUser.getVerified())
                         return Response.ok(new UserView(requestedUser, candidManager, false)).build();
                     User userInSite = userManager.get(Long.valueOf(getUserInSite()));

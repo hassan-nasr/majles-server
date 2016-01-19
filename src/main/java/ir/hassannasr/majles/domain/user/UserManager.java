@@ -14,7 +14,7 @@ import java.util.Set;
 public interface UserManager extends GenericManager<User
         , Long> {
 
-    public User createNewUser(Long userId, String phone);
+    public User createNewUser(Long userId, String phone, String refereePhone);
 
     public Endorse endorse(User user, Candid c, String context, Integer credit) throws InvalidParameterException;
 

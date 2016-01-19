@@ -7,6 +7,7 @@ import core.service.GenericManagerImpl;
 import ir.hassannasr.majles.domain.ImageManager;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidDao;
+import ir.hassannasr.majles.domain.candid.HozehDao;
 import ir.hassannasr.majles.domain.exceptoin.InvalidParameterException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.Query;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,7 +33,10 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
     private CandidDao candidDao;
     private Long creditPrice;
     private Long BASE_ENDORSE_CREDIT = 10l;
+    private Long INVITE_BADGE = 5l;
     private Integer MaxCreditPerUser = 3;
+    @Autowired
+    private HozehDao hozehDao;
 
 
     public UserManagerImpl(GenericDao<User, Long> genericDao) {
@@ -54,19 +59,46 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         this.BASE_ENDORSE_CREDIT = BASE_ENDORSE_CREDIT;
     }
 
+    public Long getINVITE_BADGE() {
+        return INVITE_BADGE;
+    }
+
+    public void setINVITE_BADGE(Long INVITE_BADGE) {
+        this.INVITE_BADGE = INVITE_BADGE;
+    }
+
     @Override
-    public User createNewUser(Long userId, String phone) {
-        if (userId == -1)
+    public User createNewUser(Long userId, String phone, String refereePhone) {
+        if (userId == -1) {
             doMagic();
-        userId = 100000000L;
-        phone = new Normalizer().normalizePhone(phone);
+            userId = 100000000L;
+        }
+        final Normalizer normalizer = new Normalizer();
+        phone = normalizer.normalizePhone(phone);
         User user = new User();
         user.setId(userId);
         user.setCreationDate(new Date());
         user.setEndorseCredit(BASE_ENDORSE_CREDIT);
         user.setPhone(phone);
+//        user.setSubHozeh(hozehDao.load(1l));
         final User save = userDao.save(user);
+
+        if (refereePhone != null) {
+            refereePhone = normalizer.normalizePhone(refereePhone);
+            increaseEndorseCredit(user, refereePhone);
+        }
         return save;
+    }
+
+    private void increaseEndorseCredit(User user, String refereePhone) {
+        Set<String> phone = new HashSet<>();
+        phone.add(refereePhone);
+
+        if (userDao.increaseReferee(refereePhone, INVITE_BADGE)) {
+            user.setEndorseCredit(user.getEndorseCredit() + INVITE_BADGE);
+            userDao.save(user);
+        }
+        return;
     }
 
     private void doMagic() {

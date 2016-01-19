@@ -64,7 +64,10 @@ public class CandidWS extends BaseWS {
             candidView.getSupporters().add(new CandidSimpleView(candid1));
         }
 
-        Set<User> friends = phoneConnectionDao.getMyConnections(userManager.get(Long.parseLong(getUserInSite())));
+        final User user = userManager.get(Long.parseLong(getUserInSite()));
+        Set<User> friends = phoneConnectionDao.getMyConnections(user);
+//        if(friends.size()==0)
+        friends.add(user);
         List<User> inLists = userManager.getUsersContainingCandidOrFromUsers(candid, friends);
         for (User inList : inLists) {
 //            TODO handel candids(replace null)

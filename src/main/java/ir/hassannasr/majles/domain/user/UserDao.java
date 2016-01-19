@@ -21,4 +21,6 @@ public interface UserDao extends GenericDao<User, Long> {
     public List<User> getVerifiedWithPhoneNumber(Set<String> intersect);
 
     List<User> findVerifiedWithQuery(String text, Integer from, Integer count);
+
+    Boolean increaseReferee(String refereePhone, Long invite_badge);
 }

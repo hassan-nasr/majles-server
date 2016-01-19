@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -29,6 +30,12 @@ public class ImageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String filePath = imageLocation + req.getParameter("imageId");
+
+        final int cacheAge = 60 * 60 * 24 * 7;
+        long expiry = new Date().getTime() + cacheAge * 1000;
+
+        resp.setDateHeader("Expires", expiry);
+        resp.setHeader("Cache-Control", "max-age=" + cacheAge);
         File file = new File(filePath);
         if (!file.exists()) {
             resp.sendError(404);

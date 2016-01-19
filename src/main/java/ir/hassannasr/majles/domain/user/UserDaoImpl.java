@@ -57,4 +57,14 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
                 .setMaxResults(count)
                 .getResultList();
     }
+
+    @Override
+    public Boolean increaseReferee(String refereePhone, Long invite_badge) {
+        if (refereePhone == null)
+            return false;
+        return entityManager.createNamedQuery("increaseReferee")
+                .setParameter("phone", refereePhone)
+                .setParameter("amount", invite_badge)
+                .executeUpdate() > 0;
+    }
 }
