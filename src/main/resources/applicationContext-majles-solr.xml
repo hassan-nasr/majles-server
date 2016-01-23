@@ -3,9 +3,10 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="httpSolrServer" class="org.apache.solr.client.solrj.impl.HttpSolrClient">
-        <constructor-arg value="http://localhost:8983/solr/candids"/>
-        <!--<constructor-arg value="${${SolrCollectionKey}}"/>-->
+    <bean id="httpSolrServer" factory-bean="solrServerFactory" factory-method="getHttpSolrServer">
+        <constructor-arg name="address" value="http://185.8.173.137:8983/solr/candids"/>
+        <constructor-arg name="username" value="hassan"/>
+        <constructor-arg name="password" value="namespace"/>
     </bean>
 
     <bean id="solrServerFactory" class="ir.hassannasr.majles.core.solr.SolrServerFactory"/>
