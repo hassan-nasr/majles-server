@@ -63,6 +63,7 @@ public class UserWS extends BaseWS {
                 }
                 if (user == null) {
                     user = userManager.createNewUser(userId, getTokenData().getPhone(), refereePhone);
+                    user.setSubHozeh(null);
                 } else if (user.getSubHozeh() == null) {
                     user.setSubHozeh(hozehDao.get(1l));
                 }
@@ -306,7 +307,7 @@ public class UserWS extends BaseWS {
     public Response chargeUser(@QueryParam("request") String query) throws IOException {
         try {
             final ApplicationService applicationService = applicationServiceManager.loadDefaultService();
-            final String decrypt = cipherUtils.decrypt(query, applicationService.getPrivateKeyExponent().substring(0, 16));
+            final String decrypt = cipherUtils.decrypt(query, applicationService.getPrivateKeyExponent().substring(10, 10 + 16));
             ObjectMapper mapper = new ObjectMapper();
             final ChargeRequest chargeRequest = mapper.readValue(decrypt, ChargeRequest.class);
             User user = userManager.getWithPhoneNumber(new HashSet<String>(Arrays.asList(chargeRequest.getPhone()))).get(0);
@@ -323,6 +324,27 @@ public class UserWS extends BaseWS {
             return sendError(e.getMessage());
         }
     }
+
+
+    @GET
+    @Path("/checkUser")
+    @Produces("application/json")
+    public Response userExist(@QueryParam("phone") String phone) throws IOException {
+        try {
+            if (phone == null || phone.isEmpty())
+                return sendError("false");
+            final HashSet<String> set = new HashSet<>();
+            set.add(phone);
+            final List<User> withPhoneNumber = userManager.getWithPhoneNumber(set);
+            if (withPhoneNumber.size() == 0)
+                return sendError("false");
+            return sendSuccess("true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return sendError(e.getMessage());
+        }
+    }
+
 
 
     public UserManager getUserManager() {

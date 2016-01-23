@@ -15,6 +15,7 @@ public class CandidSimpleView {
     String imageId;
     Long userId;
     String code;
+    Long content;
 
     public CandidSimpleView() {
     }
@@ -37,6 +38,14 @@ public class CandidSimpleView {
         this.subHozeh = candid.getSubHozeh();
         userId = candid.getUserId();
         code = candid.getCode();
+    }
+
+    public Long getContent() {
+        return content;
+    }
+
+    public void setContent(Long content) {
+        this.content = content;
     }
 
     public String getCode() {

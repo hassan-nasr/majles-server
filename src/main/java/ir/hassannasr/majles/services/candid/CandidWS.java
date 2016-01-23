@@ -4,6 +4,7 @@ import com.idehgostar.makhsan.core.encryption.CipherUtils;
 import ir.hassannasr.majles.core.solr.*;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidManager;
+import ir.hassannasr.majles.domain.candid.EndorseCount;
 import ir.hassannasr.majles.domain.user.PhoneConnectionDao;
 import ir.hassannasr.majles.domain.user.User;
 import ir.hassannasr.majles.domain.user.UserManager;
@@ -20,6 +21,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -101,6 +104,31 @@ public class CandidWS extends BaseWS {
         return Response.ok(getJsonCreator().getJson(candidViews)).build();
     }
 
+
+    @GET
+    @Path("/searchStatistics")
+    @Produces("application/json")
+    public Response search(@QueryParam("context") String context,
+                           @QueryParam("subHozehId") Long subHozehId) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        if (getUserInSite() == null)
+            return sendError("notLoggedIn");
+        try {
+            List<Candid> result = candidManager.searchStatistic(context, subHozehId);
+            final CandidSearchResult ret = new CandidSearchResult();
+            ret.setCount(result.size());
+            List<CandidSimpleView> resultSV = new ArrayList<>();
+            Method m = EndorseCount.class.getMethod("get" + Character.toUpperCase(context.charAt(0)) + context.substring(1));
+            for (Candid candid : result) {
+                final CandidSimpleView e = new CandidSimpleView(candid);
+                e.setContent((Long) m.invoke(candid.getEndorseCount()));
+                resultSV.add(e);
+            }
+            ret.setResult(resultSV);
+            return Response.ok(ret).build();
+        } catch (Exception e) {
+            return sendError("Exception");
+        }
+    }
 
     @GET
     @Path("/search")
