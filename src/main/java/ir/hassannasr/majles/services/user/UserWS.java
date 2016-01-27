@@ -16,6 +16,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -107,6 +109,14 @@ public class UserWS extends BaseWS {
                 return sendError("UserNotFound");
             }
             user.setSubHozeh(hozehDao.load(hozehId));
+            Set<Candid> newChose = new HashSet<>();
+            for (Candid candid : user.getMyChoseCandids()) {
+                if (candid.getSubHozehObj().getId().equals(hozehId))
+                    newChose.add(candid);
+                else
+                    user.getMyFollowingCandids().add(candid);
+            }
+            user.setMyChoseCandids(newChose);
             userManager.save(user);
             return Response.ok(new SimpleResponse(SimpleResponse.Status.Success, "Done")).build();
         } catch (IOException e) {
@@ -167,18 +177,21 @@ public class UserWS extends BaseWS {
         if (getUserInSite() == null)
             return sendError("NotLoggedIn");
         User user = userManager.get(Long.valueOf(getUserInSite()));
+        final Candid candid = candidManager.load(candidId);
         if ("choose".equals(listName)) {
             Integer capacity = user.getSubHozeh().getCapacity();
             if (user.getMyChoseCandids().size() >= capacity)
-                sendError("ظرفیت لیست انتخابی تکمیل است");
+                return sendError("ظرفیت لیست انتخابی تکمیل است");
+            else if (!user.getSubHozeh().getId().equals(candid.getSubHozehObj().getId()))
+                return sendError("این کاندید در حوزه انتخابی شما نیست تنها می‌توانید آن را به لیست پیگیری اضافه کنید و یا حوزه خود را تغییر دهید");
             else {
-                user.getMyChoseCandids().add(candidManager.load(candidId));
+                user.getMyChoseCandids().add(candid);
                 user = userManager.save(user);
                 return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager, true))).build();
             }
         }
         if ("follow".equals(listName)) {
-            user.getMyFollowingCandids().add(candidManager.load(candidId));
+            user.getMyFollowingCandids().add(candid);
             user = userManager.save(user);
             return Response.ok(getJsonCreator().getJson(new UserView(user, candidManager, true))).build();
         }
@@ -309,6 +322,9 @@ public class UserWS extends BaseWS {
             final ApplicationService applicationService = applicationServiceManager.loadDefaultService();
             final String decrypt = cipherUtils.decrypt(query, applicationService.getPrivateKeyExponent().substring(10, 10 + 16));
             ObjectMapper mapper = new ObjectMapper();
+            Cipher e = Cipher.getInstance("AES");
+            SecretKeySpec secretKey = new SecretKeySpec("lsdjf".getBytes(), "AES");
+            e.init(2, secretKey);
             final ChargeRequest chargeRequest = mapper.readValue(decrypt, ChargeRequest.class);
             User user = userManager.getWithPhoneNumber(new HashSet<String>(Arrays.asList(chargeRequest.getPhone()))).get(0);
             if (chargeRequest.getType().equals("AD")) {

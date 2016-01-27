@@ -82,6 +82,12 @@ public class CandidManagerImpl extends GenericManagerImpl<Candid, Long> implemen
         return candidDao.searchStatistic(context, subHozehId);
     }
 
+    @Override
+    public List<Pair<Long, Candid>> searchRay(Long subHozehId) {
+        return candidDao.countRay(subHozehId);
+
+    }
+
     protected String getDorehSring(Integer doreh) {
         String dorehString = null;
         switch (doreh){

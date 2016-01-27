@@ -4,10 +4,12 @@ import ir.hassannasr.majles.domain.base.BaseObject;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 import ir.hassannasr.majles.domain.idea.Idea;
 import ir.hassannasr.majles.domain.priority.PriorityItem;
+import ir.hassannasr.majles.domain.user.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by hassan on 07/12/2015.
@@ -15,7 +17,9 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "findCandidWithUserIds", query = "from Candid c where c.userId in :userIds"),
+        @NamedQuery(name = "selectCandidWithHozehId", query = "select c from Candid c where c.subHozehObj.id=:hozehId"),
         @NamedQuery(name = "searchCandidByDoreh", query = "select c from Candid c left join c.dorehHistoryEntities e where e.doreh like :doreh and c.majles=:isMajles order by  c.name"),
+        @NamedQuery(name = "countRay", query = "select c,(select count(*) from c.myRay) as co from Candid c where c.subHozehObj.id=:subHozehId order by co desc"),
 })
 public class Candid extends BaseObject {
     Long id;
@@ -42,6 +46,7 @@ public class Candid extends BaseObject {
     String program;
     String slogan;
     String contactInfo;
+    Set<User> myRay;
     private String subHozeh;
     private String bio;
     private String website;
@@ -50,6 +55,16 @@ public class Candid extends BaseObject {
     private List<DorehHistoryEntity> dorehHistoryEntities = new ArrayList<>();
     private Boolean isMajles = true;
     private Boolean isCandid = true;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "myChoseCandids")
+//    @JoinTable(name="user_choiceCandid", joinColumns=@JoinColumn(name="mychosecandids_id"), inverseJoinColumns=@JoinColumn(name="User_id"))
+    public Set<User> getMyRay() {
+        return myRay;
+    }
+
+    public void setMyRay(Set<User> myRay) {
+        this.myRay = myRay;
+    }
 
     @Lob
     public String getContactInfo() {

@@ -3,6 +3,7 @@ package ir.hassannasr.majles.domain.candid;
 import core.service.GenericManager;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 import ir.hassannasr.majles.domain.user.User;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collection;
 import java.util.List;
@@ -24,4 +25,6 @@ public interface CandidManager extends GenericManager<Candid, Long> {
     List<Candid> searchByDoreh(Integer Doreh, Boolean isMajles);
 
     List<Candid> searchStatistic(String context, Long subHozehId);
+
+    List<Pair<Long, Candid>> searchRay(Long subHozehId);
 }

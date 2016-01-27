@@ -145,7 +145,7 @@ public class User extends BaseObject {
     }
 
     @ManyToMany()
-    @JoinTable(name = "user_choiceCandid")
+    @JoinTable(name = "user_choiceCandid", joinColumns = @JoinColumn(name = "User_id"), inverseJoinColumns = @JoinColumn(name = "mychosecandids_id"))
     public Set<Candid> getMyChoseCandids() {
         return myChoseCandids;
     }

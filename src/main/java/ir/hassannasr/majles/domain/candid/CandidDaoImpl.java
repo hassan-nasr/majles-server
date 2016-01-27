@@ -1,7 +1,10 @@
 package ir.hassannasr.majles.domain.candid;
 
 import core.dao.GenericDaoImpl;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,5 +30,20 @@ public class CandidDaoImpl extends GenericDaoImpl<Candid, Long> implements Candi
         return (List<Candid>) entityManager.createQuery("from Candid c where  c.subHozehObj=" + subHozehId + " order by c.endorseCount." + context + " desc")
                 .setMaxResults(1000)
                 .getResultList();
+    }
+
+    @Override
+    public List<Pair<Long, Candid>> countRay(Long subHozehId) {
+        List<Object[]> candids =
+                (List<Object[]>) entityManager.createNamedQuery("countRay").setParameter("subHozehId", subHozehId)
+                        .setMaxResults(1000)
+                        .getResultList();
+        List<Pair<Long, Candid>> ret = new ArrayList<>();
+
+        for (Object[] candid : candids) {
+            ret.add(new MutablePair<>((long) candid[1], (Candid) candid[0]));
+        }
+//        entityManager.create
+        return ret;
     }
 }

@@ -1,6 +1,7 @@
 package ir.hassannasr.majles.domain.candid;
 
 import core.dao.GenericDao;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface CandidDao extends GenericDao<Candid, Long> {
     List<Candid> searchByDoreh(String dorehString, Boolean isMajles);
 
     List<Candid> searchStatistic(String context, Long subHozehId);
+
+    List<Pair<Long, Candid>> countRay(Long subHozehId);
 }

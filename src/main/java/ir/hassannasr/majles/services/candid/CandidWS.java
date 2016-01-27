@@ -10,6 +10,7 @@ import ir.hassannasr.majles.domain.user.User;
 import ir.hassannasr.majles.domain.user.UserManager;
 import ir.hassannasr.majles.services.BaseWS;
 import ir.hassannasr.majles.services.response.*;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.common.SolrDocument;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,22 +111,38 @@ public class CandidWS extends BaseWS {
     @Produces("application/json")
     public Response search(@QueryParam("context") String context,
                            @QueryParam("subHozehId") Long subHozehId) throws IOException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        if (getUserInSite() == null)
-            return sendError("notLoggedIn");
+//        if (getUserInSite() == null)
+//            return sendError("notLoggedIn");
         try {
-            List<Candid> result = candidManager.searchStatistic(context, subHozehId);
-            final CandidSearchResult ret = new CandidSearchResult();
-            ret.setCount(result.size());
-            List<CandidSimpleView> resultSV = new ArrayList<>();
-            Method m = EndorseCount.class.getMethod("get" + Character.toUpperCase(context.charAt(0)) + context.substring(1));
-            for (Candid candid : result) {
-                final CandidSimpleView e = new CandidSimpleView(candid);
-                e.setContent((Long) m.invoke(candid.getEndorseCount()));
-                resultSV.add(e);
+            if (context.equals("ray")) {
+                final List<Pair<Long, Candid>> pairs = candidManager.searchRay(subHozehId);
+                List<CandidSimpleView> ret = new ArrayList<>();
+                for (Pair<Long, Candid> pair : pairs) {
+                    final CandidSimpleView csv = new CandidSimpleView(pair.getValue());
+                    csv.setContent(pair.getKey());
+                    ret.add(csv);
+                }
+                CandidSearchResult result = new CandidSearchResult();
+                result.setResult(ret);
+                result.setCount(ret.size());
+                return Response.ok(result).build();
+
+            } else {
+                List<Candid> result = candidManager.searchStatistic(context, subHozehId);
+                final CandidSearchResult ret = new CandidSearchResult();
+                ret.setCount(result.size());
+                List<CandidSimpleView> resultSV = new ArrayList<>();
+                Method m = EndorseCount.class.getMethod("get" + Character.toUpperCase(context.charAt(0)) + context.substring(1));
+                for (Candid candid : result) {
+                    final CandidSimpleView e = new CandidSimpleView(candid);
+                    e.setContent((Long) m.invoke(candid.getEndorseCount()));
+                    resultSV.add(e);
+                }
+                ret.setResult(resultSV);
+                return Response.ok(ret).build();
             }
-            ret.setResult(resultSV);
-            return Response.ok(ret).build();
         } catch (Exception e) {
+            e.printStackTrace();
             return sendError("Exception");
         }
     }
