@@ -30,4 +30,5 @@ public interface UserManager extends GenericManager<User
 
     public Long getCreditPrice();
 
+    List<User> getWithRssUsers();
 }

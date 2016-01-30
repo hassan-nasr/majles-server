@@ -14,6 +14,8 @@ import java.util.Date;
         @NamedQuery(name = "loadPostByUsers", query = "from Post p where p.user.id in :userIds and (deleted = false or deleted is null) and p.id>:newer and p.id<:older  order by p.id desc "),
         @NamedQuery(name = "loadMyPosts", query = "from Post p where p.user.id = :userId and (deleted = false or deleted is null) and p.id>:newer and p.id<:older order by p.id desc "),
         @NamedQuery(name = "loadSponsoredPosts", query = "from Post p where sponsored=true and ( subHozehId = :hozehId or subHozehId is null )and (deleted = false or deleted = NULL) and p.id>:newer and p.id<:older order by p.id desc "),
+        @NamedQuery(name = "lastLinkPublished", query = "select p.link from Post p where p.link is not null and p.user=:user order by id desc "),
+        @NamedQuery(name = "findPostsWithId", query = " from Post p where p.id in (:ids)")
 })
 public class Post extends BaseObject {
     Boolean deleted = false;

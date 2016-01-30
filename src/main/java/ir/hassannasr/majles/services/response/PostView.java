@@ -16,6 +16,7 @@ public class PostView {
     String text = "";
     String imageId;
     String link;
+    UserSimpleView originalPublisher;
     Long basePostId;
     Long likeCount = 0L;
     Long subHozehId;
@@ -33,7 +34,31 @@ public class PostView {
         likeCount = post.getLikeCount();
         subHozehId = post.getSubHozehId();
         sponsored = post.getSponsored();
+        originalPublisher = null;
 
+    }
+
+    public PostView(Post post, Post basePost, Candid postCandid, Candid basePostCandid) {
+        deleted = post.getDeleted();
+        id = post.getId();
+        publishDate = basePost.getPublishDate();
+        user = new UserSimpleView(post.getUser(), postCandid);
+        text = basePost.getText();
+        imageId = basePost.getImageId();
+        link = basePost.getLink();
+        basePostId = post.getBasePostId();
+        likeCount = basePost.getLikeCount();
+        subHozehId = post.getSubHozehId();
+        sponsored = post.getSponsored();
+        originalPublisher = new UserSimpleView(basePost.getUser(), basePostCandid);
+    }
+
+    public UserSimpleView getOriginalPublisher() {
+        return originalPublisher;
+    }
+
+    public void setOriginalPublisher(UserSimpleView originalPublisher) {
+        this.originalPublisher = originalPublisher;
     }
 
     public Long getBasePostId() {

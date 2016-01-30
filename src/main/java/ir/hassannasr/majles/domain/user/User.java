@@ -15,6 +15,7 @@ import java.util.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "loadUsersWithPhone", query = "from ir.hassannasr.majles.domain.user.User u where u.phone in :phone"),
+        @NamedQuery(name = "withRssUsers", query = "from ir.hassannasr.majles.domain.user.User u where u.rss is not null"),
         @NamedQuery(name = "increaseReferee", query = "update ir.hassannasr.majles.domain.user.User u set u.endorseCredit=u.endorseCredit+:amount where u.phone=:phone"),
         @NamedQuery(name = "loadValidUsersWithPhone", query = "from ir.hassannasr.majles.domain.user.User u where u.phone in :phone and u.verified=true"),
         @NamedQuery(name = "findVerifiedWithQuery", query = "from ir.hassannasr.majles.domain.user.User u where u.verified=true and u.name like :query"),
@@ -33,8 +34,27 @@ public class User extends BaseObject {
     private Set<Candid> myFollowingCandids = new HashSet<>();
     private List<Endorse> endorseList = new ArrayList<>();
     private Long verifiedCredit;
+    private String rss;
+    private String telegramChanel;
 
     public User() {
+    }
+
+
+    public String getRss() {
+        return rss;
+    }
+
+    public void setRss(String rss) {
+        this.rss = rss;
+    }
+
+    public String getTelegramChanel() {
+        return telegramChanel;
+    }
+
+    public void setTelegramChanel(String telegramChanel) {
+        this.telegramChanel = telegramChanel;
     }
 
     public Long getVerifiedCredit() {

@@ -2,6 +2,7 @@ package ir.hassannasr.majles.domain.post;
 
 import core.dao.GenericDaoImpl;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
+import ir.hassannasr.majles.domain.user.User;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -51,6 +52,18 @@ public class PostDaoImpl extends GenericDaoImpl<Post, Long> implements PostDao {
                 .setMaxResults(count)
                 .getResultList();
 
+    }
+
+    public String getLastLinkPublished(User user) {
+        final List<String> resultList = entityManager.createNamedQuery("lastLinkPublished").setParameter("user", user).setMaxResults(1).getResultList();
+        if (resultList.size() > 0)
+            return resultList.get(0);
+        return null;
+    }
+
+    @Override
+    public List<Post> findPostsWithIds(List<Long> originalPostIds) {
+        return entityManager.createNamedQuery("findPostsWithId").setParameter("ids", originalPostIds).getResultList();
     }
 
 }

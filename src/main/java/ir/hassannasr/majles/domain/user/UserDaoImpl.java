@@ -67,4 +67,9 @@ public class UserDaoImpl extends GenericDaoImpl<User, Long> implements UserDao {
                 .setParameter("amount", invite_badge)
                 .executeUpdate() > 0;
     }
+
+    @Override
+    public List<User> getWithRssUsers() {
+        return entityManager.createNamedQuery("withRssUsers").getResultList();
+    }
 }

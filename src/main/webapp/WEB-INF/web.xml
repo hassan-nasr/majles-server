@@ -16,6 +16,7 @@
             classpath:/applicationContext-majles-service.xml
             classpath:/applicationContext-majles-solr.xml
             classpath:/applicationContext-majles.xml
+            classpath:/applicationContext-majles-quartz.xml
         </param-value>
     </context-param>
 

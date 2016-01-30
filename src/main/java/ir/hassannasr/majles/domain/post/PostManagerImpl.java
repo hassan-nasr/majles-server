@@ -4,12 +4,15 @@ import core.dao.GenericDao;
 import core.service.GenericManagerImpl;
 import ir.hassannasr.majles.domain.ImageManager;
 import ir.hassannasr.majles.domain.hozeh.SubHozeh;
+import ir.hassannasr.majles.domain.user.User;
 import ir.hassannasr.majles.domain.user.UserDao;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hassan on 02/11/2015.
@@ -78,6 +81,23 @@ public class PostManagerImpl extends GenericManagerImpl<Post, Long> implements P
             post.setUser(userDao.save(post.getUser()));
         }
         return save(post);
+    }
+
+    @Override
+    public String getLastLinkPublished(User user) {
+        return postDao.getLastLinkPublished(user);
+    }
+
+    @Override
+    public Map<Long, Post> getPostMap(List<Long> originalPostIds) {
+        if (originalPostIds == null || originalPostIds.size() == 0)
+            return new HashMap<>();
+        List<Post> post = postDao.findPostsWithIds(originalPostIds);
+        Map<Long, Post> postMap = new HashMap<>();
+        for (Post candid : post) {
+            postMap.put(candid.getId(), candid);
+        }
+        return postMap;
     }
 
 

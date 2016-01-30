@@ -13,6 +13,7 @@ public class UserSimpleView {
     Long subHozehId;
     String name;
     CandidSimpleView candidSimpleView;
+    Boolean verified;
 
     public UserSimpleView(User user, Candid candid) {
         this.id = user.getId();
@@ -20,8 +21,19 @@ public class UserSimpleView {
         imageId = user.getImageId();
         subHozehId = user.getSubHozeh().getId();
         name = user.getName();
+        verified = user.getVerified();
+        if (verified == null)
+            verified = false;
         if (candid != null)
             candidSimpleView = new CandidSimpleView(candid);
+    }
+
+    public Boolean getVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
     }
 
     public CandidSimpleView getCandidSimpleView() {

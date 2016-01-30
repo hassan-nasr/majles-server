@@ -120,14 +120,31 @@ public class PostWS extends BaseWS {
     }
 
     protected Response createPostViewList(List<Post> result) {
+
+        Map<Long, Post> basePosts = new HashMap<>();
+        List<Long> originalPostIds = new ArrayList<>();
+        for (Post post : result) {
+            if (post.getBasePostId() != null) {
+                originalPostIds.add(post.getBasePostId());
+            }
+        }
+        basePosts = postManager.getPostMap(originalPostIds);
         Set<User> users = new HashSet<>();
         for (Post post : result) {
+            users.add(post.getUser());
+        }
+        for (Post post : basePosts.values()) {
             users.add(post.getUser());
         }
         Map<Long, Candid> candids = candidManager.getCandidsMap(users);
         List<PostView> postViews = new ArrayList<>();
         for (Post post : result) {
-            postViews.add(new PostView(post, candids.get(post.getUser().getId())));
+            if (post.getBasePostId() == null)
+                postViews.add(new PostView(post, candids.get(post.getUser().getId())));
+            else {
+                final Post basePost = basePosts.get(post.getBasePostId());
+                postViews.add(new PostView(post, basePost, candids.get(post.getUser().getId()), candids.get(basePost.getUser().getId())));
+            }
         }
         return Response.ok(postViews).build();
     }
@@ -173,5 +190,33 @@ public class PostWS extends BaseWS {
             return sendError("AccessDenied");
 
         return Response.ok(candidManager.getPriceMap()).build();
+    }
+
+    @GET
+    @Path("/republish")
+    @Produces("application/json")
+    public Response republish(@QueryParam("post_id") Long postId) throws IOException {
+        try {
+            if (getUserInSite() == null)
+                return sendError("NotLoggedIn");
+            final Post source = postManager.get(postId);
+            if (source == null)
+                return sendError("NotFound");
+            if (source.getBasePostId() != null)
+                return sendError("NotAllowed");
+            if (!source.getUser().getVerified())
+                return sendError("تنها امکان باز نشر پست‌های کاربران تاييد شده وجود دارد");
+            if (source.getUser().getId().equals(Long.parseLong(getUserInSite())))
+                return sendError("امکان باز ارسال پست خودتان وجود ندارد");
+            Post post = new Post();
+            post.setUser(userManager.load(Long.valueOf(getUserInSite())));
+            post.setBasePostId(postId);
+            post.setPublishDate(new Date());
+            post.setDeleted(false);
+            final Post save = postManager.save(post);
+            return sendSuccess("Done");
+        } catch (Exception e) {
+            return sendError("خطا در انتشار پست");
+        }
     }
 }

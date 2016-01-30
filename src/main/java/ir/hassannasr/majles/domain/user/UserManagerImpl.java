@@ -51,6 +51,11 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         this.creditPrice = creditPrice;
     }
 
+    @Override
+    public List<User> getWithRssUsers() {
+        return userDao.getWithRssUsers();
+    }
+
     public Long getBASE_ENDORSE_CREDIT() {
         return BASE_ENDORSE_CREDIT;
     }

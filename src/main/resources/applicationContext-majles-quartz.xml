@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="hadithExportInvoker" class="ir.hassannasr.majles.bgjob.FetchRSSInvoker">
+    </bean>
+
+    <bean id="hadithExportJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="hadithExportInvoker"/>
+        <property name="targetMethod" value="tick"/>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="exportHadithTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="startDelay" value="5000"/>
+        <property name="repeatInterval" value="300000"/>
+        <property name="jobDetail" ref="hadithExportJob"/>
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="exportHadithTrigger"/>
+                <!--<ref bean="hadithViewAnalysisDataTrigger"/>-->
+            </list>
+        </property>
+    </bean>
+
+
+</beans>
