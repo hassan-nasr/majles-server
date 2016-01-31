@@ -9,12 +9,12 @@ import java.util.List;
 public class Feed {
 
     final List<FeedMessage> entries = new ArrayList<FeedMessage>();
-    String title;
-    String link;
-    String description;
-    String language;
-    String copyright;
-    String pubDate;
+    String title = "";
+    String link = "";
+    String description = "";
+    String language = "";
+    String copyright = "";
+    String pubDate = "";
 
     public Feed() {
     }

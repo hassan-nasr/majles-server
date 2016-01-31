@@ -55,7 +55,7 @@ public class RSSFeedParser {
                 public void endElement(String uri, String localName, String qName) throws SAXException {
                     if (qName.equals("item"))
                         feed.getMessages().add(currentMessage);
-
+                    state = "non";
                 }
 
                 @Override
@@ -64,29 +64,29 @@ public class RSSFeedParser {
                     switch (state) {
                         case "title":
                             if (currentMessage == null) {
-                                feed.setTitle(content);
+                                feed.setTitle(feed.getTitle() + content);
                             } else {
-                                currentMessage.setTitle(content);
+                                currentMessage.setTitle(currentMessage.getTitle() + content);
                             }
                             break;
                         case "link":
                             if (currentMessage == null) {
-                                feed.setLink(content);
+                                feed.setLink(feed.getLink() + content);
                             } else {
-                                currentMessage.setLink(content);
+                                currentMessage.setLink(currentMessage.getLink() + content);
                             }
                             break;
 
                         case "description":
                             if (currentMessage == null) {
-                                feed.setDescription(content);
+                                feed.setDescription(feed.getDescription() + content);
                             } else {
-                                currentMessage.setDescription(content);
+                                currentMessage.setDescription(currentMessage.getDescription() + content);
                             }
                             break;
                         case "pubDate":
                             if (currentMessage != null) {
-                                currentMessage.setPubDate(content);
+                                currentMessage.setPubDate(currentMessage.getPubDate() + content);
                             }
                             break;
 

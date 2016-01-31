@@ -2,12 +2,12 @@ package ir.hassannasr.majles.bgjob.rss;
 
 public class FeedMessage {
 
-    String title;
-    String description;
-    String link;
-    String author;
-    String guid;
-    private String pubDate;
+    String title = "";
+    String description = "";
+    String link = "";
+    String author = "";
+    String guid = "";
+    private String pubDate = "";
 
     public String getTitle() {
         return title;
