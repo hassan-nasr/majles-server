@@ -19,7 +19,7 @@ public class PhoneConnectionDaoImpl extends GenericDaoImpl<PhoneConnection, Long
     public Set<User> getMyConnections(User user) {
         final Map<String, PhoneConnection> toConnections = getConnectionsTo(user.getPhone());
         final Map<String, PhoneConnection> fromConnectins = getConnectionsFrom(user.getPhone());
-        final List<User> verified = userManager.getVerifiedWithPhoneNumber(toConnections.keySet());
+        final List<User> verified = userManager.getVerifiedWithPhoneNumber(fromConnectins.keySet());
         Set<String> s1 = toConnections.keySet();
         Set<String> s2 = fromConnectins.keySet();
         if (s1.size() > s2.size()) {
