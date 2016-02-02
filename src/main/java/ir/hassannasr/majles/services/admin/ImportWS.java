@@ -1,11 +1,14 @@
 package ir.hassannasr.majles.services.admin;
 
 import ir.hassannasr.majles.crowling.DorehHistory;
+import ir.hassannasr.majles.crowling.IranRayCandid;
 import ir.hassannasr.majles.crowling.Member;
 import ir.hassannasr.majles.domain.candid.Candid;
 import ir.hassannasr.majles.domain.candid.CandidManager;
 import ir.hassannasr.majles.domain.candid.DorehHistoryEntity;
+import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 import ir.hassannasr.majles.services.BaseWS;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.jsoup.Jsoup;
@@ -21,8 +24,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -32,13 +37,28 @@ import java.util.stream.Collectors;
 @Path("/admin")
 public class ImportWS extends BaseWS {
 
-    public static String saveImageLocation = "D:\\Projects\\Majles\\server\\images";
+    public static String saveImageLocation = "D:\\Projects\\Majles\\server\\imagesIR\\";
     public static String baseUrl = "http://www.majlesekhobregan.ir";
+    static String input = "./output/candidates4.json";
     @Autowired
     CandidManager candidManager;
 
     public static void main(String[] args) throws IOException {
         new ImportWS().importKhebrehMember();
+    }
+
+    private static Map<Long, Long> readHozehMap(String s) throws FileNotFoundException {
+        Scanner cin = new Scanner(new File(s));
+        Map<Long, Long> ret = new HashMap<>();
+
+        while (cin.hasNextLong()) {
+            final long value = cin.nextLong();
+            cin.skip("\\s+:\\s+");
+            final long key = cin.nextLong();
+            ret.put(key, value);
+        }
+        return ret;
+
     }
 
     @Path("/importMember")
@@ -188,5 +208,83 @@ public class ImportWS extends BaseWS {
                 }
             }
         return Response.ok(images).build();
+    }
+
+    @Path("/importIranRay")
+    @Produces("application/json")
+    @GET
+    public String main() throws IOException {
+        input = "D:\\Projects\\Majles\\server\\output\\candidates4.json";
+        ObjectMapper mapper = new ObjectMapper();
+        List<IranRayCandid> candids = mapper.readValue(new File(input), new TypeReference<List<IranRayCandid>>() {
+        });
+        Map<Long, Long> hozehMap = readHozehMap("D:\\Projects\\Majles\\server\\output\\IranRayHozehIdMap.txt");
+
+        final Map<Long, SubHozeh> allHozeh = new HashMap<>();
+        for (SubHozeh hozeh : candidManager.getAllHozeh()) {
+            allHozeh.put(hozeh.getId(), hozeh);
+        }
+        final List<Candid> all = candidManager.getAll();
+        Map<String, Candid> allCandidMap = new HashMap<>();
+        for (Candid c : all) {
+            allCandidMap.put(c.getName(), c);
+        }
+        for (IranRayCandid ircandid : candids) {
+            Candid candid = new Candid();
+            ircandid.setFullName(ircandid.getFullName().replace("\\s+", " ").replace("ي", "ی"));
+//            candid.setId(ircandid.getId());
+            candid.setName(ircandid.getFullName());
+            System.out.println(ircandid.getId());
+            candid.setSubHozehObj(allHozeh.get(hozehMap.get(ircandid.getSubHozeh().getId())));
+            candid.setHozeh(candid.getSubHozehObj().getHozeh());
+            candid.setSubHozeh(candid.getSubHozehObj().getName());
+            final Candid found = allCandidMap.get(candid.getName());
+            if (found != null) {
+                if (found.getSubHozehObj().equals(candid.getSubHozehObj()))
+                    continue;
+            }
+            candid.setCandid(true);
+            candid.setMajles(true);
+            candid.setJoined(false);
+            {
+                if (ircandid.getImageUrl() == null || ircandid.getImageUrl().endsWith("ff4594f701e04f6292e56d8a3e0db028.jpg") || ircandid.getImageUrl().endsWith("3878fd90adfa47dc9b7d50c883dab4a3.jpg")) {
+                    ;
+                } else {
+                    String imageUrl = "http://iranray.com" + ircandid.getImageUrl();
+                    final String fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
+                    try (InputStream in = new URL(imageUrl).openStream()) {
+                        Files.copy(in, Paths.get(saveImageLocation + fileName), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    candid.setImageId(fileName);
+                }
+            }
+            {
+                try {
+                    URL url = new URL("http://iranray.com/api/candidate/getDetail/" + ircandid.getId());
+//            url=new URL("http://rc.majlis.ir/fa/parliament_member/show/861887");
+                    final MyObj myObj = new ObjectMapper().readValue(url.openStream(), MyObj.class);
+                    candid.setBio(myObj.getDescription());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            candidManager.save(candid);
+        }
+        return "{}";
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class MyObj {
+        String description;
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
     }
 }

@@ -17,9 +17,11 @@ import java.util.Set;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "findCandidWithUserIds", query = "from Candid c where c.userId in :userIds"),
+        @NamedQuery(name = "getHozehById", query = "from SubHozeh c where c.id=:id"),
         @NamedQuery(name = "selectCandidWithHozehId", query = "select c from Candid c where c.subHozehObj.id=:hozehId"),
         @NamedQuery(name = "searchCandidByDoreh", query = "select c from Candid c left join c.dorehHistoryEntities e where e.doreh like :doreh and c.majles=:isMajles order by  c.name"),
         @NamedQuery(name = "countRay", query = "select c,(select count(*) from c.myRay) as co from Candid c where c.subHozehObj.id=:subHozehId order by co desc"),
+
 })
 public class Candid extends BaseObject {
     Long id;

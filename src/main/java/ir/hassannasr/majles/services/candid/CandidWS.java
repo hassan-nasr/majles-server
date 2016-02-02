@@ -162,10 +162,18 @@ public class CandidWS extends BaseWS {
             if (from == null)
                 from = 0;
             if (count == null)
-                count = 50;
+                count = 1000;
 
             final ArrayList<QueryElement> queryElements = new ArrayList<>();
             for (String s : query.split("\\s+")) {
+                if (s.startsWith("حوزه:")) {
+                    final String id = s.split(":", 2)[1];
+//                    SubHozeh hozeh = candidManager.getHozeh(id);
+//                    if(hozeh==null)
+//                        continue;
+                    queryElements.add(new QueryElement("subhozehobj_id", id));
+                    continue;
+                }
                 QueryElement queryElement = new StringQueryElement("all", s);
                 queryElements.add(queryElement);
             }

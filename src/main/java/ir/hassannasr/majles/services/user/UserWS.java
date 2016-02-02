@@ -12,6 +12,7 @@ import ir.hassannasr.majles.domain.exceptoin.InvalidParameterException;
 import ir.hassannasr.majles.domain.user.*;
 import ir.hassannasr.majles.services.BaseWS;
 import ir.hassannasr.majles.services.response.*;
+import org.apache.commons.lang3.ObjectUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -108,6 +109,7 @@ public class UserWS extends BaseWS {
             if (user == null) {
                 return sendError("UserNotFound");
             }
+            hozehId = fixHozehId(hozehId);
             user.setSubHozeh(hozehDao.load(hozehId));
             Set<Candid> newChose = new HashSet<>();
             for (Candid candid : user.getMyChoseCandids()) {
@@ -128,6 +130,14 @@ public class UserWS extends BaseWS {
             }
         }
         return null;
+    }
+
+    protected Long fixHozehId(@QueryParam("hozehId") Long hozehId) {
+        if (ObjectUtils.equals(47L, hozehId))
+            hozehId = 48L;
+        else if (ObjectUtils.equals(153L, hozehId))
+            hozehId = 151L;
+        return hozehId;
     }
 
     @Path("/addEndorse")

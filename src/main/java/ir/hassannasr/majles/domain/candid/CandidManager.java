@@ -27,4 +27,6 @@ public interface CandidManager extends GenericManager<Candid, Long> {
     List<Candid> searchStatistic(String context, Long subHozehId);
 
     List<Pair<Long, Candid>> searchRay(Long subHozehId);
+
+    SubHozeh getHozeh(Long id);
 }

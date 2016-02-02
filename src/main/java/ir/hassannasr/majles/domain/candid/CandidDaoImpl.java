@@ -1,6 +1,7 @@
 package ir.hassannasr.majles.domain.candid;
 
 import core.dao.GenericDaoImpl;
+import ir.hassannasr.majles.domain.hozeh.SubHozeh;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -45,5 +46,14 @@ public class CandidDaoImpl extends GenericDaoImpl<Candid, Long> implements Candi
         }
 //        entityManager.create
         return ret;
+    }
+
+    @Override
+    public SubHozeh getHozeh(Long id) {
+        try {
+            return (SubHozeh) entityManager.createNamedQuery("getHozehById").setParameter("id", id).getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

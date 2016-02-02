@@ -15,7 +15,7 @@
 
     <bean id="exportHadithTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
         <property name="startDelay" value="5000"/>
-        <property name="repeatInterval" value="300000"/>
+        <property name="repeatInterval" value="3000000"/>
         <property name="jobDetail" ref="hadithExportJob"/>
     </bean>
 

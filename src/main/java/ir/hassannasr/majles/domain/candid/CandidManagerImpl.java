@@ -88,6 +88,11 @@ public class CandidManagerImpl extends GenericManagerImpl<Candid, Long> implemen
 
     }
 
+    @Override
+    public SubHozeh getHozeh(Long id) {
+        return candidDao.getHozeh(id);
+    }
+
     protected String getDorehSring(Integer doreh) {
         String dorehString = null;
         switch (doreh){
