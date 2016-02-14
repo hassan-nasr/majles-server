@@ -83,9 +83,12 @@ public class UserManagerImpl extends GenericManagerImpl<User, Long> implements U
         User user = new User();
         user.setId(userId);
         user.setCreationDate(new Date());
-        user.setEndorseCredit(BASE_ENDORSE_CREDIT);
+        if (phone.startsWith("00"))
+            user.setEndorseCredit(BASE_ENDORSE_CREDIT);
+        if (phone.startsWith("11"))
+            user.setEndorseCredit(0L);
         user.setPhone(phone);
-        user.setSubHozeh(hozehDao.load(53l));
+        user.setSubHozeh(hozehDao.load(53L));
         final User save = userDao.save(user);
 
         if (refereePhone != null) {
